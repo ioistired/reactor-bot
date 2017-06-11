@@ -3,6 +3,10 @@
 # C extensions
 *.so
 
+# Virtualenv
+venv/
+env/
+
 # Packages
 *.egg
 *.egg-info
