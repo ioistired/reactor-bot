@@ -4,6 +4,7 @@
 import poll_bot
 
 import asyncio
+import sys
 
 
-poll_bot.bot.run('token')
+poll_bot.bot.run(sys.argv[1])
