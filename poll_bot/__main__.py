@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 
-import poll_bot
+from . import bot
 
 import asyncio
 import sys
@@ -9,7 +9,7 @@ import sys
 
 def main(argv):
 	try:
-		poll_bot.bot.run(argv[1])
+		bot.run(argv[1])
 	except:
 		return 1
 	else:

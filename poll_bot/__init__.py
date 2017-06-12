@@ -3,7 +3,7 @@
 
 """poll_bot - A simple reaction-based Discord poll bot"""
 
-__version__ = '0.1.0'
+__version__ = '0.2.1'
 __author__ = 'Benjamin Mintz <bmintz@protonmail.com>'
 __all__ = []
 
@@ -30,31 +30,31 @@ async def on_ready():
 
 @bot.command(name=':', pass_context=True)
 async def reaction_poll(context):
-
 	message = context.message
 	
 	# multiple lines
-	if len('\n'.split(message.contents)) > 1:
-		multi_poll(message)
+	if len(message.content.split('\n')) > 1:
+		await multi_poll(message)
 	else:
 		for reaction in ('👍', '👎', '🤷'):
 			await bot.add_reaction(message, reaction)
 
 
-def multi_poll(message):
+async def multi_poll(message):
 	# match numbers or letters with parens after
 	# e.g.
 	# 1)
 	# 34)
 	# 42)
 	# Q)
-	numbers_pattern = re.compile(r'^(\d+(?=\)))', re.IGNORECASE, re.MULTILINE)
+	numbers_pattern = re.compile(r'^([\d|A-Za-z]+(?=\)))', re.IGNORECASE|re.MULTILINE)
 	
-	for match in re.finditer(numbers_pattern, message.contents):
+	for match in re.finditer(numbers_pattern, message.content):
+		option = match.group(0)
 		try:
-			bot.add_reaction(message, get_emoji(match.group(0)))
-		except ValueError:
-			pass
+			await bot.add_reaction(message, get_emoji(option))
+		except ValueError as ex:
+			print(ex)
 
 
 def get_emoji(text):
@@ -64,7 +64,7 @@ def get_emoji(text):
 		elif text in string.digits:
 			return get_digit_emoji(text)
 	else:
-		raise ValueError('Symbol emoji invalid or not implemented')
+		raise ValueError('Symbol emoji "{}" invalid or not implemented'.format(text))
 
 
 def get_regional_indicator_emoji(letter):
@@ -76,4 +76,4 @@ def get_regional_indicator_emoji(letter):
 
 
 def get_digit_emoji(digit):
-	return digit + '\uFE0F\u20E3'
+	return digit + '\u20E3'
