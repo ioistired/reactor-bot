@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
 	name='poll_bot',
-	version='0.2.0',
+	version='0.2.1',
 	url='https://github.com/bmintz/poll-bot',
 
 	author='Benjamin Mintz',
@@ -14,6 +14,10 @@ setuptools.setup(
 	packages=setuptools.find_packages(),
 
 	install_requires=['discord.py'],
+
+	entry_points={
+		'console_scripts': 'poll-bot = poll_bot.__main__:main',
+	},
 
 	classifiers=[
 		'Development Status :: 2 - Pre-Alpha',

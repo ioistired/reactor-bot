@@ -7,4 +7,13 @@ import asyncio
 import sys
 
 
-poll_bot.bot.run(sys.argv[1])
+def main(argv):
+	try:
+		poll_bot.bot.run(argv[1])
+	except:
+		return 1
+	else:
+		return 0
+
+
+sys.exit(main(sys.argv))
