@@ -12,20 +12,20 @@ import discord
 from discord.ext import commands
 
 
-bot = commands.Bot(command_prefix='')
+bot = commands.Bot(command_prefix='poll')
 
 
 @bot.event
 async def on_ready():
 
-		print('-------------')
+		print('----------------------')
 		print('Logged in as:')
 		print('Username:', bot.user.name)
 		print('ID:', bot.user.id)
-		print('-------------')
+		print('----------------------')
 
 
-@bot.command(name='poll:', pass_context=True)
+@bot.command(name=':', pass_context=True)
 async def reaction_poll(context):
 
 	message = context.message
