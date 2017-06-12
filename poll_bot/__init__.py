@@ -44,6 +44,7 @@ async def reaction_poll(context):
 def multi_poll(message):
 	# match numbers or letters with parens after
 	# e.g.
+	# 1)
 	# 34)
 	# 42)
 	# Q)
@@ -51,7 +52,7 @@ def multi_poll(message):
 	
 	for match in re.finditer(numbers_pattern, message.contents):
 		try:
-			bot.add_reaction(message, get_emoji(match.group(0))
+			bot.add_reaction(message, get_emoji(match.group(0)))
 		except ValueError:
 			pass
 
@@ -72,3 +73,7 @@ def get_regional_indicator_emoji(letter):
 	letter_index = ord(letter) - ord('a')
 	
 	return chr(start + letter_index)
+
+
+def get_digit_emoji(digit):
+	return digit + '\uFE0F\u20E3'
