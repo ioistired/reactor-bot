@@ -6,4 +6,4 @@ import poll_bot
 import asyncio
 
 
-poll_bot.bot.run('***REMOVED***')
+poll_bot.bot.run('token')
