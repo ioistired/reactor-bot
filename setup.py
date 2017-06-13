@@ -23,5 +23,6 @@ setuptools.setup(
 		'Development Status :: 2 - Pre-Alpha',
 		'Programming Language :: Python',
 		'Programming Language :: Python :: 3.5',
+		'License :: OSI Approved :: MIT License',
 	],
 )
