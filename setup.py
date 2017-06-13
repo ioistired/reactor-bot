@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
 	name='poll_bot',
-	version='0.2.1',
+	version='0.3.0',
 	url='https://github.com/bmintz/poll-bot',
 
 	author='Benjamin Mintz',
