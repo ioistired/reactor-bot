@@ -19,8 +19,10 @@ Requirements
 Compatibility
 -------------
 
-Licence
+License
 -------
+
+Until I decide on a license, please feel free to make pull requests on this repository.
 
 Authors
 -------
