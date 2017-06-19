@@ -36,21 +36,28 @@ async def reaction_poll(context):
 	if len(message.content.split('\n')) > 1:
 		await multi_poll(message)
 	else:
+		# yes, no, shrug
+		# TODO make these customizable, as some people prefer
+		# :squid: to :shrug:
 		for reaction in ('👍', '👎', '🤷'):
 			await bot.add_reaction(message, reaction)
 
 
 async def multi_poll(message):
-	# match numbers or letters with parens after
-	# e.g.
-	# 1)
-	# 34)
-	# 42)
-	# Q)
-	numbers_pattern = re.compile(r'^([\d|A-Za-z]+(?=\)))', re.IGNORECASE|re.MULTILINE)
+	numbers_pattern = re.compile(
+		r'''
+		
+		^(\d+ # match 1 or more digits (for the 1234 emoji)...
+		|. # or one of any other character
+		(?=\)) # but only if there's a literal ")" afterwards
+		)
+		''',
+		
+		re.IGNORECASE|re.MULTILINE|re.VERBOSE)
 	
 	for match in re.finditer(numbers_pattern, message.content):
 		option = match.group(0)
+		print(option)
 		try:
 			await bot.add_reaction(message, get_emoji(option))
 		except ValueError as ex:
@@ -59,12 +66,15 @@ async def multi_poll(message):
 
 def get_emoji(text):
 	if len(text) > 1:
-		raise ValueError('Symbol emoji "{}" invalid or not implemented'.format(text))	
+		raise ValueError('Symbol emoji "{}" invalid or not implemented'.format(text))
 
 	if text in string.ascii_letters:
 		return get_regional_indicator_emoji(text.lower())
 	elif text in string.digits:
 		return get_digit_emoji(text)
+	else:
+		# if not letters or digits, it's probably an emoji anyway
+		return text
 
 
 def get_regional_indicator_emoji(letter):
