@@ -58,13 +58,13 @@ async def multi_poll(message):
 
 
 def get_emoji(text):
-	if len(text) == 1:
-		if text in string.ascii_letters:
-			return get_regional_indicator_emoji(text.lower())
-		elif text in string.digits:
-			return get_digit_emoji(text)
-	else:
-		raise ValueError('Symbol emoji "{}" invalid or not implemented'.format(text))
+	if len(text) > 1:
+		raise ValueError('Symbol emoji "{}" invalid or not implemented'.format(text))	
+
+	if text in string.ascii_letters:
+		return get_regional_indicator_emoji(text.lower())
+	elif text in string.digits:
+		return get_digit_emoji(text)
 
 
 def get_regional_indicator_emoji(letter):
