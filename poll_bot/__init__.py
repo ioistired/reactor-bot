@@ -20,12 +20,11 @@ bot = commands.Bot(command_prefix='poll')
 
 @bot.event
 async def on_ready():
-
-		print('----------------------')
-		print('Logged in as:')
-		print('Username:', bot.user.name)
-		print('ID:', bot.user.id)
-		print('----------------------')
+	print('----------------------')
+	print('Logged in as:')
+	print('Username:', bot.user.name)
+	print('ID:', bot.user.id)
+	print('----------------------')
 
 
 @bot.command(name=':', pass_context=True)
