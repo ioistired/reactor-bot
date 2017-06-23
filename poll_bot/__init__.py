@@ -12,7 +12,6 @@ import discord
 from discord.ext import commands
 
 import string
-import re
 
 
 bot = commands.Bot(command_prefix='poll')
