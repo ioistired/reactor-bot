@@ -42,31 +42,26 @@ async def reaction_poll(context):
 			await bot.add_reaction(message, reaction)
 
 
-async def multi_poll(message):
-	numbers_pattern = re.compile(
-		r'''
-		
-		^(\d+ # match 1 or more digits (for the 1234 emoji)...
-		|. # or one of any other character
-		(?=\)) # but only if there's a literal ")" afterwards
-		)
-		''',
-		
-		re.IGNORECASE|re.MULTILINE|re.VERBOSE)
+async def multi_poll(message):	
+	# the first line is the command line.
+	# ignore the first line
+	for line in message.content.split('\n')[1:]:
+		await bot.add_reaction(message, get_emoji(line))
+
+
+def get_emoji(line):
+	return emojify(extract_emoji(line))
+
+
+def extract_emoji(line):
+	separator = ')' if ')' in line else None
 	
-	for match in re.finditer(numbers_pattern, message.content):
-		option = match.group(0)
-		print(option)
-		try:
-			await bot.add_reaction(message, get_emoji(option))
-		except ValueError as ex:
-			print(ex)
+	# in case separator = ')',
+	# strip() will get rid of trailing whitespace
+	return line.split(separator)[0].strip()
 
 
-def get_emoji(text):
-	if len(text) > 1:
-		raise ValueError('Symbol emoji "{}" invalid or not implemented'.format(text))
-
+def emojify(text):
 	if text in string.ascii_letters:
 		return get_regional_indicator_emoji(text.lower())
 	elif text in string.digits:
@@ -76,13 +71,14 @@ def get_emoji(text):
 		return text
 
 
-def get_regional_indicator_emoji(letter):
+def get_regional_indicator_emoji(letter: str):
 	start = ord('🇦')
+	
 	# position in alphabet
 	letter_index = ord(letter) - ord('a')
 	
 	return chr(start + letter_index)
 
 
-def get_digit_emoji(digit):
+def get_digit_emoji(digit: str):
 	return digit + '\u20E3'
