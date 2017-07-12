@@ -11,6 +11,7 @@ __all__ = []
 import discord
 from discord.ext import commands
 
+import re
 import string
 
 
@@ -61,6 +62,12 @@ async def extract_emoji(line):
 
 
 async def emojify(text):
+	# match server emoji
+	custom_emoji_match = re.search(r'^<(:[\w_]*:\d*)>', text)
+	
+	if custom_emoji_match:
+		# ignore the <> on either side
+		return custom_emoji_match.group(1)
 	if text in string.ascii_letters:
 		return await get_regional_indicator_emoji(text.lower())
 	elif text in string.digits:
