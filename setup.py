@@ -15,6 +15,12 @@ setuptools.setup(
 
 	install_requires=['discord.py'],
 
+	extras_require={
+		'dev': [
+			'bumpversion',
+		],
+	},
+
 	entry_points={
 		'console_scripts': 'poll-bot = poll_bot.__main__:main',
 	},
