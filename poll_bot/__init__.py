@@ -42,7 +42,7 @@ async def reaction_poll(context):
 			await bot.add_reaction(message, reaction)
 	
 	# no matter what, not knowing is always an option
-	await bot.add_reaction('🤷')
+	await bot.add_reaction(message, '🤷')
 
 
 async def multi_poll(message):	
