@@ -16,3 +16,9 @@ class TestPollBot:
 		
 		for input, output in lines_and_emojis.items():
 			assert poll_bot.extract_emoji(input) == output
+	
+	
+	def test_emojify(self):
+		# custom emoji extraction is the only feature unique to emojify()
+		# so we'll test the other functionality in other tests
+		assert poll_bot.emojify('<:python3:232720527448342530>') == ':python3:232720527448342530'
