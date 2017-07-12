@@ -24,6 +24,8 @@ class TestPollBot:
 		# custom emoji extraction is the only feature unique to emojify()
 		# so we'll test the other functionality in other tests
 		assert poll_bot.emojify('<:python3:232720527448342530>') == ':python3:232720527448342530'
+		
+		assert poll_bot.emojify('asdfghjkl;') == 'asdfghjkl;'
 	
 	
 	def test_get_regional_indicator_emoji(self):
@@ -31,3 +33,10 @@ class TestPollBot:
 		
 		for input, output in regional_indicator_map.items():
 			assert poll_bot.get_regional_indicator_emoji(input) == output
+	
+	
+	def test_get_digit_emoji(self):
+		io_map = {digit: digit + '\N{combining enclosing keycap}' for digit in string.digits}
+		
+		for input, output in io_map.items():
+			assert poll_bot.get_digit_emoji(input) == output
