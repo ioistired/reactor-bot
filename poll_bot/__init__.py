@@ -38,8 +38,11 @@ async def reaction_poll(context):
 		# yes, no, shrug
 		# TODO make these customizable, as some people prefer
 		# :squid: to :shrug:
-		for reaction in ('👍', '👎', '🤷'):
+		for reaction in ('👍', '👎'):
 			await bot.add_reaction(message, reaction)
+	
+	# no matter what, not knowing is always an option
+	await bot.add_reaction('🤷')
 
 
 async def multi_poll(message):	
