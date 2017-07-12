@@ -3,7 +3,7 @@
 
 """poll_bot - A simple reaction-based Discord poll bot"""
 
-__version__ = '1.2.1'
+__version__ = '1.2.2'
 __author__ = 'Benjamin Mintz <bmintz@protonmail.com>'
 __all__ = []
 
