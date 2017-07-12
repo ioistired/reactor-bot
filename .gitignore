@@ -1,5 +1,8 @@
 .cache
 
+# nano swap files
+*.swp
+
 *.py[cod]
 
 # C extensions
