@@ -3,6 +3,8 @@
 import pytest
 import poll_bot
 
+import string
+
 class TestPollBot:
 
 	def test_extract_emoji(self):
@@ -22,3 +24,10 @@ class TestPollBot:
 		# custom emoji extraction is the only feature unique to emojify()
 		# so we'll test the other functionality in other tests
 		assert poll_bot.emojify('<:python3:232720527448342530>') == ':python3:232720527448342530'
+	
+	
+	def test_get_regional_indicator_emoji(self):
+		regional_indicator_map = {letter: chr(ord(letter) - ord('a') + ord('🇦')) for letter in string.ascii_lowercase}
+		
+		for input, output in regional_indicator_map.items():
+			assert poll_bot.get_regional_indicator_emoji(input) == output
