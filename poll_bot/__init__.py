@@ -45,14 +45,14 @@ async def multi_poll(message):
 	# the first line is the command line.
 	# ignore the first line
 	for line in message.content.split('\n')[1:]:
-		await bot.add_reaction(message, get_emoji(line))
+		await bot.add_reaction(message, await get_emoji(line))
 
 
-def get_emoji(line):
-	return emojify(extract_emoji(line))
+async def get_emoji(line):
+	return await emojify(await extract_emoji(line))
 
 
-def extract_emoji(line):
+async def extract_emoji(line):
 	separator = ')' if ')' in line else None
 	
 	# in case separator = ')',
@@ -60,17 +60,17 @@ def extract_emoji(line):
 	return line.split(separator)[0].strip()
 
 
-def emojify(text):
+async def emojify(text):
 	if text in string.ascii_letters:
-		return get_regional_indicator_emoji(text.lower())
+		return await get_regional_indicator_emoji(text.lower())
 	elif text in string.digits:
-		return get_digit_emoji(text)
+		return await get_digit_emoji(text)
 	else:
 		# if not letters or digits, it's probably an emoji anyway
 		return text
 
 
-def get_regional_indicator_emoji(letter: str):
+async def get_regional_indicator_emoji(letter: str):
 	start = ord('🇦')
 	
 	# position in alphabet
@@ -79,5 +79,5 @@ def get_regional_indicator_emoji(letter: str):
 	return chr(start + letter_index)
 
 
-def get_digit_emoji(digit: str):
+async def get_digit_emoji(digit: str):
 	return digit + '\u20E3'
