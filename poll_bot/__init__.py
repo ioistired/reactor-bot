@@ -42,7 +42,7 @@ async def on_server_remove():
 async def update_bot_stats():
 	"""inform bots.discord.pw of how many guilds the bot is in"""
 	
-		async with aiohttp.ClientSession() as session:
+	async with aiohttp.ClientSession() as session:
 		print('Updating stats.')
 		print('Server count:', str(len(bot.servers)))
 		print('Auth token:', bot.discordpw_api_token)
