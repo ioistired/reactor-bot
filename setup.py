@@ -13,7 +13,10 @@ setuptools.setup(
 
 	packages=setuptools.find_packages(),
 
-	install_requires=['discord.py'],
+	install_requires=[
+		'discord.py',
+		'appdirs',
+	],
 
 	extras_require={
 		'dev': [
