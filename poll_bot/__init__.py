@@ -30,11 +30,11 @@ async def on_ready():
 
 
 @bot.event
-async def on_server_join():
+async def on_server_join(server):
 	await update_bot_stats()
 
 @bot.event
-async def on_server_remove():
+async def on_server_remove(server):
 	await update_bot_stats()
 
 
