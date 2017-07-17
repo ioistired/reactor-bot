@@ -14,7 +14,7 @@ Usage
 
 	poll: Is F# better than Python?
 
-*The bot will add 👍, 👎, and 🤷 (shrug) as reactions*::	
+*The bot will add 👍, 👎, and 🤷 (shrug) as reactions* ::
 
 	poll: Where should we go for pizza?
 	A Domino's
@@ -24,7 +24,7 @@ Usage
 *The bot will add 🇦, 🇧, 🇨, and 🤷 as reactions*
 (You can also use numbers, but not 1234 or 10 for technical reasons)
 
-You can also use right-parens and other emoji:::
+You can also use right-parens and other emoji ::
 
 	poll: How should I punctuate whomstve?
 	🅾️) whomst've
