@@ -27,11 +27,12 @@ Usage
 You can also use right-parens and other emoji ::
 
 	poll: How should I punctuate whomstve?
-	🅾️) whomst've
-	🅱️) whom'st've
-	🅿️) w'h'o'm's't've
+	🤔) whomst've
+	:thonking:) whom'st've
+	🅱️) w'h'o'm's't've
+	
 
-*🅾️, 🅱️, 🅿️, and 🤷 will be added as reactions*
+*🤔, \:thonking\: (if your server has it), 🅱️, and 🤷 will be added as reactions*
 
 
 Installation
