@@ -38,7 +38,6 @@ async def on_server_remove(server):
 	await update_bot_stats()
 
 
-
 async def update_bot_stats():
 	"""inform bots.discord.pw of how many guilds the bot is in"""
 	
@@ -93,11 +92,7 @@ def get_emoji(line):
 
 
 def extract_emoji(line):
-	separator = ')' if ')' in line else None
-	
-	# in case separator = ')',
-	# strip() will get rid of trailing whitespace
-	return line.split(separator)[0].strip()
+	return line.split(')')[0].split()[0].strip()
 
 
 def emojify(text):
