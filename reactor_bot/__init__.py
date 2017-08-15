@@ -78,7 +78,14 @@ async def multi_poll(message):
 	# the first line is the command line.
 	# ignore the first line
 	for line in message.content.split('\n')[1:]:
-		await bot.add_reaction(message, get_emoji(line))
+		try:
+			await bot.add_reaction(message, get_emoji(line))
+		# since we're trying to react with arbitrary emoji,
+		# some of them are going to be bunk
+		# but that shouldn't stop the whole poll
+		except discord.errors.HTTPException:
+			continue
+		
 
 
 def get_emoji(line):
