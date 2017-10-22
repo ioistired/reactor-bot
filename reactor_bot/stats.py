@@ -84,3 +84,7 @@ class Discordlist(StatsAPI):
 			headers={'Content-Type': 'application/json'},
 		)
 
+
+def setup(bot):
+	for Cog in (DiscordPwStats,):
+		bot.add_cog(Cog(bot))
