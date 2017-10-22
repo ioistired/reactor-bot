@@ -80,7 +80,7 @@ class Discordlist(StatsAPI):
 			data=json.dumps({
 				'token': self.bot.config['bots.discordlist.net']['api-token'],
 				'server_count': len(self.bot.servers),
-			}
+			})
 			headers={'Content-Type': 'application/json'},
 		)
 
