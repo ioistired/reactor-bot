@@ -1,14 +1,14 @@
 import setuptools
 
 setuptools.setup(
-	name='poll_bot',
-	version='2.1.1',
-	url='https://github.com/bmintz/poll-bot',
+	name='reactor_bot',
+	version='2.2.2',
+	url='https://github.com/bmintz/reactor-bot',
 
 	author='Benjamin Mintz',
 	author_email='bmintz@protonmail.com',
 
-	description='A simple reaction-based Discord poll bot',
+	description='The best dang Discord poll bot around™',
 	long_description=open('README.rst').read(),
 
 	packages=setuptools.find_packages(),
@@ -25,7 +25,7 @@ setuptools.setup(
 	},
 
 	entry_points={
-		'console_scripts': 'poll-bot = poll_bot.__main__:main',
+		'console_scripts': 'reactor-bot = reactor_bot.__main__:main',
 	},
 
 	classifiers=[

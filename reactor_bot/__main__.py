@@ -12,12 +12,13 @@ import sys
 
 def main():
 	
-	dirs = AppDirs('poll-bot', 'bmintz')
+	dirs = AppDirs('reactor-bot', 'bmintz')
 	config = ConfigParser()
-	config.read(os.path.join(dirs.user_config_dir, 'poll-bot.ini'))
+	config.read(os.path.join(dirs.user_config_dir, 'reactor-bot.ini'))
 	
 	bot.discordpw_api_token = config['bots.discord.pw']['api_token']
 	bot.run(config['discord']['api_token'])
+	
 	return 0
 
 

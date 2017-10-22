@@ -3,7 +3,7 @@
 
 """poll_bot - A simple reaction-based Discord poll bot"""
 
-__version__ = '2.1.1'
+__version__ = '2.2.2'
 __author__ = 'Benjamin Mintz <bmintz@protonmail.com>'
 __all__ = []
 
@@ -36,7 +36,6 @@ async def on_server_join(server):
 @bot.event
 async def on_server_remove(server):
 	await update_bot_stats()
-
 
 
 async def update_bot_stats():
@@ -78,7 +77,14 @@ async def multi_poll(message):
 	# the first line is the command line.
 	# ignore the first line
 	for line in message.content.split('\n')[1:]:
-		await bot.add_reaction(message, get_emoji(line))
+		try:
+			await bot.add_reaction(message, get_emoji(line))
+		# since we're trying to react with arbitrary emoji,
+		# some of them are going to be bunk
+		# but that shouldn't stop the whole poll
+		except discord.errors.HTTPException:
+			continue
+		
 
 
 def get_emoji(line):
@@ -86,11 +92,7 @@ def get_emoji(line):
 
 
 def extract_emoji(line):
-	separator = ')' if ')' in line else None
-	
-	# in case separator = ')',
-	# strip() will get rid of trailing whitespace
-	return line.split(separator)[0].strip()
+	return line.split(')')[0].split()[0].strip()
 
 
 def emojify(text):
