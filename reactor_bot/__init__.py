@@ -25,34 +25,6 @@ async def on_ready():
 	print('Username:', bot.user.name)
 	print('ID:', bot.user.id)
 	print('----------------------')
-	
-	await update_bot_stats()
-
-
-@bot.event
-async def on_server_join(server):
-	await update_bot_stats()
-
-@bot.event
-async def on_server_remove(server):
-	await update_bot_stats()
-
-
-async def update_bot_stats():
-	"""inform bots.discord.pw of how many guilds the bot is in"""
-	
-	async with aiohttp.ClientSession() as session:
-		async with session.post(
-			'https://bots.discord.pw/api/bots/{}/stats'.format(bot.user.id),
-			# manually format as JSON
-			# pfft, who needs `json.dumps()`?
-			data='{{"server_count": {}}}'.format(len(bot.servers)),
-			headers={
-				'Authorization': bot.discordpw_api_token,
-				'Content-Type': 'application/json',
-			},
-		) as resp:
-			print('bots.discord.pw response:', await resp.text())
 
 
 @bot.command(name=':', pass_context=True)
