@@ -17,8 +17,8 @@ def main():
 	config.read(os.path.join(dirs.user_config_dir, 'reactor-bot.ini'))
 
 	bot.config = config
-	bot.load_extension('stats')
-	bot.run(config['discord']['api-token'])
+	bot.load_extension('reactor_bot.stats')
+	bot.run(config['discord']['api_token'])
 
 	return 0
 
