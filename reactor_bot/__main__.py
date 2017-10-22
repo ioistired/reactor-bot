@@ -11,14 +11,14 @@ import sys
 
 
 def main():
-	
+
 	dirs = AppDirs('reactor-bot', 'bmintz')
 	config = ConfigParser()
 	config.read(os.path.join(dirs.user_config_dir, 'reactor-bot.ini'))
-	
-	bot.discordpw_api_token = config['bots.discord.pw']['api_token']
-	bot.run(config['discord']['api_token'])
-	
+
+	bot.config = config
+	bot.run(config['discord']['api-token'])
+
 	return 0
 
 
