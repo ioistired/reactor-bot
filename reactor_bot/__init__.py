@@ -122,23 +122,3 @@ def get_regional_indicator_emoji(letter: str):
 
 def get_digit_emoji(digit: str):
 	return digit + '\u20E3'
-
-
-
-if __name__ == '__main__':
-	from configparser import ConfigParser
-	from appdirs import AppDirs
-
-	import os.path
-	import sys
-
-	dirs = AppDirs('reactor-bot', 'bmintz')
-	config = ConfigParser()
-	config.read(os.path.join(dirs.user_config_dir, 'reactor-bot.ini'))
-
-	bot.config = config
-	bot.load_extension('stats')
-	bot.run(config['discord']['api_token'])
-
-
-	sys.exit(0)
