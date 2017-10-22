@@ -19,13 +19,13 @@ class StatsAPI:
 	
 	async def send(self, url, headers={}, data={}):
 		"""send the statistics to the API gateway."""
-		async with session.post(
+		async with self.session.post(
 			url,
 			data=data,
 			headers=headers
 		) as resp:
 			print('[STATS]', self.__class__.__name__, end='')
-			if await resp.status != 200:
+			if resp.status != 200:
 				print('failed with status code', await resp.status)
 			else:
 				print('response:', await resp.text())
@@ -47,7 +47,7 @@ class DiscordPwStats(StatsAPI):
 
 
 	async def send(self):
-		super().send(
+		await super().send(
 			'https://bots.discord.pw/api/bots/{}/stats'.format(self.bot.user.id),
 			data=json.dumps({'server_count': len(self.bot.servers)}),
 			headers={
@@ -63,7 +63,7 @@ class DiscordBotList(StatsAPI):
 
 
 	async def send(self):
-		super().send(
+		await super().send(
 			'https://discordbots.org/api/bots/{}/stats'.format(self.bot.user.id),
 			data=json.dumps({'server_count': len(self.bot.servers)}),
 			headers={
@@ -74,8 +74,11 @@ class DiscordBotList(StatsAPI):
 
 
 class Discordlist(StatsAPI):
-	def __init__(self, *args):
-		super().send(
+	async def __init__(self, *args):
+		super().__init__(*args)
+
+	async def send(self):
+		await super().send(
 			'https://bots.discordlist.net/api',
 			data=json.dumps({
 				'token': self.bot.config['bots.discordlist.net']['api_token'],
