@@ -138,7 +138,7 @@ if __name__ == '__main__':
 
 	bot.config = config
 	bot.load_extension('stats')
-	bot.run(config['discord']['api-token'])
+	bot.run(config['discord']['api_token'])
 
 
 	sys.exit(0)
