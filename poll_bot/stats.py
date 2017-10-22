@@ -8,9 +8,8 @@ import aiohttp
 class StatsAPI:
 	# credit to "ﾠﾠﾠﾠ#7887" on the Discord Bots List guild
 	# for much of this
-	def __init__(self, bot, config):
+	def __init__(self, bot):
 		self.bot = bot
-		self.config = config
 		self.session = aiohttp.ClientSession()
 	
 	
@@ -18,14 +17,19 @@ class StatsAPI:
 		self.bot.loop.create_task(self.session.close())
 	
 	
-	async def send(self, config_section, config_key):
-		"""send the statistics to the API gateway.
-		since this process varies between APIs,
-		this method should only be defined in subclasses
-		"""
-	
-		...
-	
+	async def send(self, url, headers={}, data={}):
+		"""send the statistics to the API gateway."""
+		async with session.post(
+			url,
+			data=data,
+			headers=headers
+		) as resp:
+			print('[STATS]', self.__class__.__name__, end='')
+			if await resp.status != 200:
+				print('failed with status code', await resp.status)
+			else:
+				print('response:', await resp.text())
+
 	
 	async def on_server_join(self, server):
 		await self.send()
@@ -35,3 +39,48 @@ class StatsAPI:
 	
 	async def on_ready(self):
 		await self.send()
+
+
+class DiscordPwStats(StatsAPI):
+	def __init__(self, *args):
+		super().__init__(*args)
+
+
+	async def send(self):
+		super().send(
+			'https://bots.discord.pw/api/bots/{}/stats'.format(self.bot.user.id),
+			data=json.dumps({'server_count': len(self.bot.servers)}),
+			headers={
+				'Authorization': self.bot.config['bots.discord.pw']['api-token'],
+				'Content-Type': 'application/json',
+			},
+		)
+
+
+class DiscordBotList(StatsAPI):
+	def __init__(self, *args):
+		super().__init__(*args)
+
+
+	async def send(self):
+		super().send(
+			'https://discordbots.org/api/bots/{}/stats'.format(self.bot.user.id),
+			data=json.dumps({'server_count': len(self.bot.servers)}),
+			headers={
+				'Authorization': self.bot.config['discordbots.org']['api-token'],
+				'Content-Type': 'application/json',
+			},
+		)
+
+
+class Discordlist(StatsAPI):
+	def __init__(self, *args):
+		super().send(
+			'https://bots.discordlist.net/api',
+			data=json.dumps({
+				'token': self.bot.config['bots.discordlist.net']['api-token'],
+				'server_count': len(self.bot.servers),
+			}
+			headers={'Content-Type': 'application/json'},
+		)
+
