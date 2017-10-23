@@ -102,6 +102,6 @@ def get_digit_emoji(digit: str):
 	return digit + '\u20E3'
 
 
-async def april_fools():
+def april_fools():
 	today = date.today()
 	return today == date(today.year, month=4, day=1)
