@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 
-"""poll_bot - A simple reaction-based Discord poll bot"""
+"""reactor_bot - The best dang Discord poll bot around™"""
 
 __version__ = '2.4.1'
 __author__ = 'Benjamin Mintz <bmintz@protonmail.com>'
-__all__ = []
 
 
 import discord

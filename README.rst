@@ -5,7 +5,7 @@ Reactor™
 	:target: https://pypi.python.org/pypi/poll_bot
 	:alt: Latest PyPI version
 
-The bast dang Discord poll bot around™
+The best dang Discord poll bot around™
 
 Usage
 -----
