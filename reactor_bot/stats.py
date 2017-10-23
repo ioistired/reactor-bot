@@ -11,12 +11,13 @@ class StatsAPI:
 	def __init__(self, bot):
 		self.bot = bot
 		self.session = aiohttp.ClientSession()
-	
-	
+		self.config_key = 'api_token'
+
+
 	def __unload(self):
 		self.bot.loop.create_task(self.session.close())
-	
-	
+
+
 	async def send(self, url, headers={}, data={}):
 		"""send the statistics to the API gateway."""
 		async with self.session.post(
@@ -24,7 +25,7 @@ class StatsAPI:
 			data=data,
 			headers=headers
 		) as resp:
-			print('[STATS]', self.__class__.__name__, end='')
+			print('[STATS]', self.config_section, end=' ')
 			if resp.status != 200:
 				print('failed with status code', await resp.status)
 			else:
@@ -42,6 +43,8 @@ class StatsAPI:
 
 
 class DiscordPwStats(StatsAPI):
+	config_section = 'bots.discord.pw'
+
 	def __init__(self, *args):
 		super().__init__(*args)
 
@@ -51,13 +54,16 @@ class DiscordPwStats(StatsAPI):
 			'https://bots.discord.pw/api/bots/{}/stats'.format(self.bot.user.id),
 			data=json.dumps({'server_count': len(self.bot.servers)}),
 			headers={
-				'Authorization': self.bot.config['bots.discord.pw']['api_token'],
+				'Authorization': self.bot.config[self.config_section][self.config_key],
 				'Content-Type': 'application/json',
 			},
 		)
 
 
 class DiscordBotList(StatsAPI):
+	config_section = 'discordbots.org'
+
+
 	def __init__(self, *args):
 		super().__init__(*args)
 
@@ -67,21 +73,25 @@ class DiscordBotList(StatsAPI):
 			'https://discordbots.org/api/bots/{}/stats'.format(self.bot.user.id),
 			data=json.dumps({'server_count': len(self.bot.servers)}),
 			headers={
-				'Authorization': self.bot.config['discordbots.org']['api_token'],
+				'Authorization': self.bot.config[self.config_section][self.config_key],
 				'Content-Type': 'application/json',
 			},
 		)
 
 
 class Discordlist(StatsAPI):
-	async def __init__(self, *args):
+	config_section = 'bots.discordlist.net'
+
+
+	def __init__(self, *args):
 		super().__init__(*args)
+
 
 	async def send(self):
 		await super().send(
 			'https://bots.discordlist.net/api',
 			data=json.dumps({
-				'token': self.bot.config['bots.discordlist.net']['api_token'],
+				'token': self.bot.config[self.config_section][self.config_key],
 				'server_count': len(self.bot.servers),
 			}),
 			headers={'Content-Type': 'application/json'},
@@ -89,5 +99,11 @@ class Discordlist(StatsAPI):
 
 
 def setup(bot):
-	for Cog in (DiscordPwStats,):
-		bot.add_cog(Cog(bot))
+	for Cog in (DiscordPwStats, DiscordBotList, Discordlist):
+		if bot.config.has_section(Cog.config_section):
+			bot.add_cog(Cog(bot))
+		else:
+			print(
+				Cog.config_section,
+				"was not loaded! Please make sure it's configured properly."
+			)
