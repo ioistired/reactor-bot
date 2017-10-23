@@ -52,7 +52,7 @@ class DiscordPwStats(StatsAPI):
 	async def send(self):
 		await super().send(
 			'https://bots.discord.pw/api/bots/{}/stats'.format(self.bot.user.id),
-			data=json.dumps({'server_count': len(self.bot.servers)}),
+			data=json.dumps({'server_count': len(self.bot.guilds)}),
 			headers={
 				'Authorization': self.bot.config[self.config_section][self.config_key],
 				'Content-Type': 'application/json',
@@ -71,7 +71,7 @@ class DiscordBotList(StatsAPI):
 	async def send(self):
 		await super().send(
 			'https://discordbots.org/api/bots/{}/stats'.format(self.bot.user.id),
-			data=json.dumps({'server_count': len(self.bot.servers)}),
+			data=json.dumps({'server_count': len(self.bot.guilds)}),
 			headers={
 				'Authorization': self.bot.config[self.config_section][self.config_key],
 				'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ class Discordlist(StatsAPI):
 			'https://bots.discordlist.net/api',
 			data=json.dumps({
 				'token': self.bot.config[self.config_section][self.config_key],
-				'server_count': len(self.bot.servers),
+				'server_count': len(self.bot.guilds),
 			}),
 			headers={'Content-Type': 'application/json'},
 		)
