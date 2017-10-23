@@ -31,7 +31,7 @@ async def reaction_poll(context):
 	message = context.message
 	
 	# multiple lines
-	if len(message.content.split('\n')) > 1:
+	if message.content.count('\n') > 1:
 		await multi_poll(message)
 	else:
 		# yes, no, shrug
@@ -48,6 +48,8 @@ async def multi_poll(message):
 	# the first line is the command line.
 	# ignore the first line
 	for line in message.content.split('\n')[1:]:
+		if not line: # the line may be blank
+			continue
 		try:
 			await message.add_reaction(get_emoji(line))
 		# since we're trying to react with arbitrary emoji,
