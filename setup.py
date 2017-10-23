@@ -21,6 +21,8 @@ setuptools.setup(
 	extras_require={
 		'dev': [
 			'bumpversion',
+			'tox',
+			'pytest',
 		],
 	},
 

@@ -1,0 +1,76 @@
+#!/usr/bin/env python3
+
+import reactor_bot
+
+class TestReactorBot:
+	def test_extract_emoji(self):
+		lines_and_emojis = {
+			' M)-ystery meat': 'M',
+			'🐕 dog sandwiches': '🐕',
+			'3 blind mice': '3',
+			'🇺🇸 flags': '🇺🇸',
+			'<:python3:232720527448342530> python3!': '<:python3:232720527448342530>',
+		}
+	
+		for input, output in lines_and_emojis.items():
+			assert reactor_bot.extract_emoji(input) == output
+	
+	
+	def test_emojify(self):
+		# custom emoji extraction is the only feature unique to emojify()
+		# so we'll test the other functionality in other tests
+		assert reactor_bot.emojify('<:python3:232720527448342530>') == ':python3:232720527448342530'
+	
+		assert reactor_bot.emojify('asdfghjkl;') == 'asdfghjkl;'
+	
+	
+	def test_get_regional_indicator_emoji(self):
+		io_map = {
+			'a': '🇦',
+			'b': '🇧',
+			'c': '🇨',
+			'd': '🇩',
+			'e': '🇪',
+			'f': '🇫',
+			'g': '🇬',
+			'h': '🇭',
+			'i': '🇮',
+			'j': '🇯',
+			'k': '🇰',
+			'l': '🇱',
+			'm': '🇲',
+			'n': '🇳',
+			'o': '🇴',
+			'p': '🇵',
+			'q': '🇶',
+			'r': '🇷',
+			's': '🇸',
+			't': '🇹',
+			'u': '🇺',
+			'v': '🇻',
+			'w': '🇼',
+			'x': '🇽',
+			'y': '🇾',
+			'z': '🇿',
+		}
+	
+		for input, output in io_map.items():
+			assert reactor_bot.get_regional_indicator_emoji(input) == output
+	
+	
+	def test_get_digit_emoji(self):
+		io_map = {
+			'0': '0⃣',
+			'1': '1⃣',
+			'2': '2⃣',
+			'3': '3⃣',
+			'4': '4⃣',
+			'5': '5⃣',
+			'6': '6⃣',
+			'7': '7⃣',
+			'8': '8⃣',
+			'9': '9⃣',
+		}
+	
+		for input, output in io_map.items():
+			assert reactor_bot.get_digit_emoji(input) == output
