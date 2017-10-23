@@ -23,6 +23,7 @@ setuptools.setup(
 			'bumpversion',
 			'tox',
 			'pytest',
+			'pytest-cov',
 		],
 	},
 
