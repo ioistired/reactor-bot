@@ -38,18 +38,18 @@ async def reaction_poll(context):
 		# TODO make these customizable, as some people prefer
 		# :squid: to :shrug:
 		for reaction in ('👍', '👎'):
-			await bot.add_reaction(message, reaction)
+			await message.add_reaction(reaction)
 	
 	# no matter what, not knowing is always an option
-	await bot.add_reaction(message, '🤷')
+	await message.add_reaction('🤷')
 
 
-async def multi_poll(message):	
+async def multi_poll(message):
 	# the first line is the command line.
 	# ignore the first line
 	for line in message.content.split('\n')[1:]:
 		try:
-			await bot.add_reaction(message, get_emoji(line))
+			await message.add_reaction(get_emoji(line))
 		# since we're trying to react with arbitrary emoji,
 		# some of them are going to be bunk
 		# but that shouldn't stop the whole poll
