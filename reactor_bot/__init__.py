@@ -104,4 +104,4 @@ def get_digit_emoji(digit: str):
 
 def april_fools():
 	today = date.today()
-	return today == date(today.year, month=4, day=1)
+	return today.month == 4 and today.day == 1
