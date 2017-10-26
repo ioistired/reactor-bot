@@ -67,10 +67,6 @@ def get_emoji(line):
 
 
 def extract_emoji(line):
-	if line.isspace() or not line:
-		# an empty line would otherwise cause an index error
-		# since the split() would return ''
-		return ''
 	return line.split(')')[0].split()[0].strip()
 
 
@@ -78,11 +74,6 @@ def emojify(text):
 	# match server emoji
 	custom_emoji_match = re.search(r'^<(:[\w_]*:\d*)>', text)
 
-	# since '' is always "in" any other string,
-	# we need to break out of that first
-	# otherwise we'd by trying to get_letter_emoji('')
-	if not text:
-		return ''
 	if custom_emoji_match:
 		# ignore the <> on either side
 		return custom_emoji_match.group(1)
