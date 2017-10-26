@@ -15,19 +15,22 @@ class TestReactorBot:
 			'🇺🇸 flags': '🇺🇸',
 			'<:python3:232720527448342530> python3!': '<:python3:232720527448342530>',
 		}
-	
+
 		for input, output in lines_and_emojis.items():
 			assert reactor_bot.extract_emoji(input) == output
-	
-	
+
+
 	def test_emojify(self):
-		# custom emoji extraction is the only feature unique to emojify()
-		# so we'll test the other functionality in other tests
 		assert reactor_bot.emojify('<:python3:232720527448342530>') == ':python3:232720527448342530'
-	
+		assert reactor_bot.emojify('a') == '🇦'
+		# this one's wonky--sometimes we return invalid emoji,
+		# but that's ok, because Discord throws them out with an error ;)
+		assert reactor_bot.emojify('123') == '123⃣'
+		assert reactor_bot.emojify('0') == '0⃣'
+		assert reactor_bot.emojify('6') == '6⃣'
 		assert reactor_bot.emojify('asdfghjkl;') == 'asdfghjkl;'
-	
-	
+
+
 	def test_get_letter_emoji(self):
 		io_map = {
 			'A': '🇦',
