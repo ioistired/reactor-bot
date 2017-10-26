@@ -6,6 +6,22 @@ import string
 from datetime import date
 
 
+def get_poll_emoji(message):
+	"""generate the proper emoji to react to any poll message"""
+	if message.count('\n') > 0:
+		# ignore the first line, which is the command line
+		for line in message.split('\n')[1:]:
+			if not line:
+				continue
+			yield parse_starting_emoji(line)
+	else:
+		yield from ('👍', '👎')
+
+	# no matter what, not knowing is always an option
+	# TODO make this configurable anyway
+	yield get_shrug_emoji()
+
+
 def parse_starting_emoji(line):
 	"""find text/emoji at the beginning of a line
 	and convert it to proper emoji"""
