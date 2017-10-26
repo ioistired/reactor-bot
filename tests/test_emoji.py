@@ -14,6 +14,37 @@ class TestEmojiUtils:
 		cls.april_fools = date(2017, 4, 1)
 		cls.halloween = date(2017, 10, 31)
 
+		cls.shrug_emoji = {
+			cls.non_holiday: '🤷',
+			cls.april_fools: '🦑',
+			cls.halloween: '\N{jack-o-lantern}',
+		}
+
+
+	def test_get_poll_emoji(self):
+		# TODO more test cases
+		messages = {
+			'poll: What should we eat for lunch?\n'
+			'M)-ystery meat\n'
+			'🐕 dog sandwiches\n'
+			'\n'
+			'3 blind mice\n'
+			'🇺🇸) flags\n'
+			'foo\n'
+			'bar': ('🇲', '🐕', '3⃣', '🇺🇸', 'foo', 'bar'),
+
+			'poll: Haskell lang best lang?': ('👍', '👎'),
+		}
+
+		def test(shrug_emoji):
+			for message, reactions in messages.items():
+				assert tuple(emoji.get_poll_emoji(message)) \
+				== reactions + tuple(shrug_emoji)
+
+		for date, shrug_emoji in self.shrug_emoji.items():
+			with freeze_time(date):
+				test(shrug_emoji)
+
 
 	def test_extract_emoji(self):
 		lines_and_emojis = {
@@ -104,9 +135,6 @@ class TestEmojiUtils:
 
 
 	def test_get_shrug_emoji(self):
-		with freeze_time(self.april_fools):
-			assert emoji.get_shrug_emoji() == '🦑'
-		with freeze_time(self.halloween):
-			assert emoji.get_shrug_emoji() == '\N{jack-o-lantern}'
-		with freeze_time(self.non_holiday):
-			assert emoji.get_shrug_emoji() == '🤷'
+		for date, shrug_emoji in self.shrug_emoji.items():
+			with freeze_time(date):
+				assert emoji.get_shrug_emoji() == shrug_emoji
