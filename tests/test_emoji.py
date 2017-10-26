@@ -2,9 +2,18 @@
 
 from reactor_bot import emoji
 
+from datetime import date
+
 from freezegun import freeze_time
 
 class TestEmojiUtils:
+
+	@classmethod
+	def setup_class(cls):
+		cls.non_holiday = date(2017, 3, 27)
+		cls.april_fools = date(2017, 4, 1)
+		cls.halloween = date(2017, 10, 31)
+
 
 	def test_extract_emoji(self):
 		lines_and_emojis = {
@@ -68,11 +77,12 @@ class TestEmojiUtils:
 		# one of these tests will fail on april fools
 		# (hint: it's "B")
 		# unless we force the date to not be april fools
-		with freeze_time("2018-01-01"):
+		# any date that isn't a holiday will do
+		with freeze_time(self.non_holiday):
 			for input, output in io_map.items():
 				assert emoji.get_letter_emoji(input) == output
 
-		with freeze_time("2018-04-01"):
+		with freeze_time(self.april_fools):
 			assert emoji.get_letter_emoji('B') == '🅱'
 
 	def test_get_digit_emoji(self):
@@ -94,13 +104,9 @@ class TestEmojiUtils:
 
 
 	def test_get_shrug_emoji(self):
-		with freeze_time("2017-10-31"):
-			assert emoji.get_shrug_emoji() == '🤷'
-		with freeze_time("2018-04-01"):
+		with freeze_time(self.april_fools):
 			assert emoji.get_shrug_emoji() == '🦑'
-
-	def test_april_fools(self):
-		with freeze_time("2017-10-31"):
-			assert not emoji._april_fools()
-		with freeze_time("2018-04-01"):
-			assert emoji._april_fools()
+		with freeze_time(self.halloween):
+			assert emoji.get_shrug_emoji() == '\N{jack-o-lantern}'
+		with freeze_time(self.non_holiday):
+			assert emoji.get_shrug_emoji() == '🤷'
