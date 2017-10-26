@@ -32,7 +32,7 @@ async def reaction_poll(context):
 	message = context.message
 
 	# multiple lines
-	if message.content.count('\n') > 1:
+	if message.content.count('\n') > 0:
 		await multi_poll(message)
 	else:
 		# yes, no, shrug
