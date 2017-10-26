@@ -70,7 +70,7 @@ def get_letter_emoji(letter: str):
 
 
 def get_digit_emoji(digit: str):
-	return digit + '\u20E3'
+	return digit + '\N{combining enclosing keycap}'
 
 
 def get_shrug_emoji():
