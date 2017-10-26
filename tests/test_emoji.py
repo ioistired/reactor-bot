@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 
-import reactor_bot
+from reactor_bot import emoji
 
-import datetime
 from freezegun import freeze_time
 
-class TestReactorBot:
+class TestEmojiUtils:
 
 	def test_extract_emoji(self):
 		lines_and_emojis = {
@@ -17,18 +16,23 @@ class TestReactorBot:
 		}
 
 		for input, output in lines_and_emojis.items():
-			assert reactor_bot.extract_emoji(input) == output
+			assert emoji.extract_emoji(input) == output
 
 
-	def test_emojify(self):
-		assert reactor_bot.emojify('<:python3:232720527448342530>') == ':python3:232720527448342530'
-		assert reactor_bot.emojify('a') == '🇦'
-		# this one's wonky--sometimes we return invalid emoji,
-		# but that's ok, because Discord throws them out with an error ;)
-		assert reactor_bot.emojify('123') == '123⃣'
-		assert reactor_bot.emojify('0') == '0⃣'
-		assert reactor_bot.emojify('6') == '6⃣'
-		assert reactor_bot.emojify('asdfghjkl;') == 'asdfghjkl;'
+	def test_parse_emoji(self):
+		io_map = {
+			'<:python3:232720527448342530>': ':python3:232720527448342530',
+			'a': '🇦',
+			# this one's wonky--sometimes we return invalid emoji,
+			# but that's ok, because Discord throws them out with an error ;)
+			'123': '123⃣',
+			'0': '0⃣',
+			'6': '6⃣',
+			'asdfghjkl;': 'asdfghjkl;',
+		}
+
+		for input, output in io_map.items():
+			assert emoji.parse_emoji(input) == output
 
 
 	def test_get_letter_emoji(self):
@@ -66,10 +70,10 @@ class TestReactorBot:
 		# unless we force the date to not be april fools
 		with freeze_time("2018-01-01"):
 			for input, output in io_map.items():
-				assert reactor_bot.get_letter_emoji(input) == output
+				assert emoji.get_letter_emoji(input) == output
 
 		with freeze_time("2018-04-01"):
-			assert reactor_bot.get_letter_emoji('B') == '🅱'
+			assert emoji.get_letter_emoji('B') == '🅱'
 
 	def test_get_digit_emoji(self):
 		io_map = {
@@ -86,11 +90,17 @@ class TestReactorBot:
 		}
 
 		for input, output in io_map.items():
-			assert reactor_bot.get_digit_emoji(input) == output
+			assert emoji.get_digit_emoji(input) == output
 
+
+	def test_get_shrug_emoji(self):
+		with freeze_time("2017-10-31"):
+			assert emoji.get_shrug_emoji() == '🤷'
+		with freeze_time("2018-04-01"):
+			assert emoji.get_shrug_emoji() == '🦑'
 
 	def test_april_fools(self):
 		with freeze_time("2017-10-31"):
-			assert not reactor_bot.april_fools()
+			assert not emoji._april_fools()
 		with freeze_time("2018-04-01"):
-			assert reactor_bot.april_fools()
+			assert emoji._april_fools()
