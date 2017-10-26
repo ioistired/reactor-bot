@@ -41,7 +41,7 @@ async def reaction_poll(context):
 		for reaction in ('👍', '👎'):
 			await message.add_reaction(reaction)
 
-	shrug_emoji = '\N{squid}' if april_fools() else '🤷'
+	shrug_emoji = '🦑' if april_fools() else '🤷'
 	# no matter what, not knowing is always an option
 	await message.add_reaction(shrug_emoji)
 
