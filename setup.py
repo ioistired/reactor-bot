@@ -24,6 +24,7 @@ setuptools.setup(
 			'tox',
 			'pytest',
 			'pytest-cov',
+			'freezegun',
 		],
 	},
 

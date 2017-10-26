@@ -2,7 +2,11 @@
 
 import reactor_bot
 
+import datetime
+from freezegun import freeze_time
+
 class TestReactorBot:
+
 	def test_extract_emoji(self):
 		lines_and_emojis = {
 			' M)-ystery meat': 'M',
@@ -71,6 +75,13 @@ class TestReactorBot:
 			'8': '8⃣',
 			'9': '9⃣',
 		}
-	
+
 		for input, output in io_map.items():
 			assert reactor_bot.get_digit_emoji(input) == output
+
+
+	def test_april_fools(self):
+		with freeze_time("2017-10-31"):
+			assert not reactor_bot.april_fools()
+		with freeze_time("2018-04-01"):
+			assert reactor_bot.april_fools()

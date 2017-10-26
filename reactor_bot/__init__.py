@@ -9,10 +9,11 @@ __author__ = 'Benjamin Mintz <bmintz@protonmail.com>'
 
 import discord
 from discord.ext import commands
+import aiohttp
 
 import re
 import string
-import aiohttp
+from datetime import date
 
 bot = commands.Bot(command_prefix='poll')
 
@@ -29,7 +30,7 @@ async def on_ready():
 @bot.command(name=':', pass_context=True)
 async def reaction_poll(context):
 	message = context.message
-	
+
 	# multiple lines
 	if message.content.count('\n') > 1:
 		await multi_poll(message)
@@ -39,9 +40,10 @@ async def reaction_poll(context):
 		# :squid: to :shrug:
 		for reaction in ('👍', '👎'):
 			await message.add_reaction(reaction)
-	
+
+	shrug_emoji = '🦑' if april_fools() else '🤷'
 	# no matter what, not knowing is always an option
-	await message.add_reaction('🤷')
+	await message.add_reaction(shrug_emoji)
 
 
 async def multi_poll(message):
@@ -57,7 +59,7 @@ async def multi_poll(message):
 		# but that shouldn't stop the whole poll
 		except discord.errors.HTTPException:
 			continue
-		
+
 
 
 def get_emoji(line):
@@ -71,12 +73,12 @@ def extract_emoji(line):
 def emojify(text):
 	# match server emoji
 	custom_emoji_match = re.search(r'^<(:[\w_]*:\d*)>', text)
-	
+
 	if custom_emoji_match:
 		# ignore the <> on either side
 		return custom_emoji_match.group(1)
 	elif text in string.ascii_letters:
-		return get_regional_indicator_emoji(text.lower())
+		return get_regional_indicator_emoji(text.upper())
 	elif text in string.digits:
 		return get_digit_emoji(text)
 	else:
@@ -85,13 +87,21 @@ def emojify(text):
 
 
 def get_regional_indicator_emoji(letter: str):
+	if letter == 'B' and april_fools():
+		return '🅱'
+
 	start = ord('🇦')
-	
+
 	# position in alphabet
-	letter_index = ord(letter) - ord('a')
-	
+	letter_index = ord(letter) - ord('A')
+
 	return chr(start + letter_index)
 
 
 def get_digit_emoji(digit: str):
 	return digit + '\u20E3'
+
+
+def april_fools():
+	today = date.today()
+	return today.month == 4 and today.day == 1
