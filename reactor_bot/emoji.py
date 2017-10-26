@@ -58,7 +58,7 @@ def parse_emoji(text):
 
 
 def get_letter_emoji(letter: str):
-	if letter == 'B' and _get_holiday == 'April Fools':
+	if letter == 'B' and _get_holiday() == 'April Fools':
 		return '🅱'
 
 	start = ord('🇦')
