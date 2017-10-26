@@ -32,10 +32,10 @@ class StatsAPI:
 				print('response:', await resp.text())
 
 	
-	async def on_server_join(self, server):
+	async def on_guild_join(self, server):
 		await self.send()
 	
-	async def on_server_remove(self, server):
+	async def on_guild_remove(self, server):
 		await self.send()
 	
 	async def on_ready(self):
