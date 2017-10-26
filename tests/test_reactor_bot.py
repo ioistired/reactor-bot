@@ -28,7 +28,7 @@ class TestReactorBot:
 		assert reactor_bot.emojify('asdfghjkl;') == 'asdfghjkl;'
 	
 	
-	def test_get_regional_indicator_emoji(self):
+	def test_get_letter_emoji(self):
 		io_map = {
 			'A': '🇦',
 			'B': '🇧',
@@ -63,10 +63,10 @@ class TestReactorBot:
 		# unless we force the date to not be april fools
 		with freeze_time("2018-01-01"):
 			for input, output in io_map.items():
-				assert reactor_bot.get_regional_indicator_emoji(input) == output
+				assert reactor_bot.get_letter_emoji(input) == output
 
 		with freeze_time("2018-04-01"):
-			assert reactor_bot.get_regional_indicator_emoji('B') == '🅱'
+			assert reactor_bot.get_letter_emoji('B') == '🅱'
 
 	def test_get_digit_emoji(self):
 		io_map = {

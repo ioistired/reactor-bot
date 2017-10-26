@@ -78,7 +78,7 @@ def emojify(text):
 		# ignore the <> on either side
 		return custom_emoji_match.group(1)
 	elif text in string.ascii_letters:
-		return get_regional_indicator_emoji(text.upper())
+		return get_letter_emoji(text.upper())
 	elif text in string.digits:
 		return get_digit_emoji(text)
 	else:
@@ -86,7 +86,7 @@ def emojify(text):
 		return text
 
 
-def get_regional_indicator_emoji(letter: str):
+def get_letter_emoji(letter: str):
 	if letter == 'B' and april_fools():
 		return '🅱'
 
