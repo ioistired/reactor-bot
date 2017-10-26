@@ -58,7 +58,7 @@ def parse_emoji(text):
 
 
 def get_letter_emoji(letter: str):
-	if letter == 'B' and _april_fools():
+	if letter == 'B' and _get_holiday == 'April Fools':
 		return '🅱'
 
 	start = ord('🇦')
@@ -74,12 +74,20 @@ def get_digit_emoji(digit: str):
 
 
 def get_shrug_emoji():
-	if _april_fools():
-		return '🦑'
-	else:
-		return '🤷'
+	shrug_emoji = {
+		'April Fools': '🦑',
+		'Halloween': '\N{jack-o-lantern}',
+	}
+
+	return shrug_emoji.get(_get_holiday(), '🤷')
 
 
-def _april_fools():
+def _get_holiday():
 	today = date.today()
-	return today.month == 4 and today.day == 1
+
+	holidays = {
+		(4, 1): 'April Fools',
+		(10, 31): 'Halloween',
+	}
+
+	return holidays.get((today.month, today.day))
