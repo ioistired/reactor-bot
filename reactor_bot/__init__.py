@@ -6,13 +6,14 @@
 __version__ = '3.2.2'
 __author__ = 'Benjamin Mintz <bmintz@protonmail.com>'
 
-
-from reactor_bot import emoji
+import sys
+import time
 
 import discord
 from discord.ext import commands
 
-import sys
+from reactor_bot import emoji
+
 
 bot = commands.Bot(command_prefix='poll')
 
@@ -34,6 +35,15 @@ async def reaction_poll(context):
 		if reaction not in seen_reactions:
 			seen_reactions.add(reaction)
 			await react_safe(message, reaction)
+
+
+@bot.command()
+async def ping(context):
+	pong = '🏓 Pong! '
+	start = time.time()
+	message = await context.send(pong)
+	end = time.time()
+	await message.edit(content=pong + f'│{(end - start)*1000}ms')
 
 
 async def react_safe(message, reaction):
