@@ -11,9 +11,8 @@ def get_poll_emoji(message):
 	if message.count('\n') > 0:
 		# ignore the first line, which is the command line
 		for line in message.split('\n')[1:]:
-			if not line:
-				continue
-			yield parse_starting_emoji(line)
+			if line:
+				yield parse_starting_emoji(line)
 	else:
 		yield from ('👍', '👎')
 
@@ -57,7 +56,7 @@ def parse_emoji(text):
 		return text
 
 
-def get_letter_emoji(letter: str):
+def get_letter_emoji(letter):
 	if letter == 'B' and _get_holiday() == 'April Fools':
 		return '🅱'
 
