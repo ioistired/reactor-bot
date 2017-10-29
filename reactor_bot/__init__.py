@@ -42,8 +42,8 @@ async def ping(context):
 	pong = '🏓 Pong! '
 	start = time.time()
 	message = await context.send(pong)
-	end = time.time()
-	await message.edit(content=pong + f'│{(end - start)*1000}ms')
+	rtt = (time.time() - start) * 1000
+	await message.edit(content=pong + '│{}ms'.format(rtt))
 
 
 async def react_safe(message, reaction):
