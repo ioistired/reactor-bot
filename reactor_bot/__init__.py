@@ -43,7 +43,8 @@ async def ping(context):
 	start = time.time()
 	message = await context.send(pong)
 	rtt = (time.time() - start) * 1000
-	await message.edit(content=pong + '│{}ms'.format(rtt))
+	# 10 µs is plenty precise
+	await message.edit(content=pong + '│{:.2f}ms'.format(rtt))
 
 
 async def react_safe(message, reaction):
