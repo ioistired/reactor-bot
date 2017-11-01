@@ -3,7 +3,7 @@
 
 """reactor_bot - The best dang Discord poll bot around™"""
 
-__version__ = '3.3.1'
+__version__ = '3.4.0'
 __author__ = 'Benjamin Mintz <bmintz@protonmail.com>'
 
 import sys
