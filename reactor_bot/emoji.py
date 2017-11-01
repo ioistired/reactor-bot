@@ -4,6 +4,7 @@
 import re
 import string
 from datetime import date
+import random
 
 
 def get_poll_emoji(message):
@@ -75,10 +76,13 @@ def get_digit_emoji(digit: str):
 def get_shrug_emoji():
 	shrug_emoji = {
 		'April Fools': '🦑',
-		'Halloween': '\N{jack-o-lantern}',
+		'Halloween': '\N{jack-o-lantern}\N{ghost}',
 	}
 
-	return shrug_emoji.get(_get_holiday(), '🤷')
+	# random.choice(a) s.t. len(a) == 1 is always a[0]
+	# so if there's more than one shrug emoji, pick one
+	# else, use the only one available
+	return random.choice(shrug_emoji.get(_get_holiday(), '🤷'))
 
 
 def _get_holiday():
