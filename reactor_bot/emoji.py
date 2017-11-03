@@ -75,8 +75,9 @@ def get_digit_emoji(digit: str):
 
 def get_shrug_emoji():
 	shrug_emoji = {
-		'April Fools': '🦑',
-		'Halloween': '\N{jack-o-lantern}\N{ghost}',
+		'April Fools': ('🦑',),
+		'Five/Nine': (':fsociety:376004430929199114',),
+		'Halloween': ('\N{jack-o-lantern}', '\N{ghost}'),
 	}
 
 	# random.choice(a) s.t. len(a) == 1 is always a[0]
@@ -90,6 +91,7 @@ def _get_holiday():
 
 	holidays = {
 		(4, 1): 'April Fools',
+		(5, 9): 'Five/Nine',
 		(10, 31): 'Halloween',
 	}
 
