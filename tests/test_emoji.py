@@ -12,12 +12,13 @@ class TestEmojiUtils:
 	def setup_class(cls):
 		cls.non_holiday = date(2017, 3, 27)
 		cls.april_fools = date(2017, 4, 1)
+		cls.five_nine = date(2017, 5, 9)
 		cls.halloween = date(2017, 10, 31)
 
 		cls.shrug_emoji = {
 			cls.non_holiday: '🤷',
 			cls.april_fools: '🦑',
-			cls.halloween: '\N{jack-o-lantern}',
+			cls.five_nine: ':fsociety:376004430929199114',
 		}
 
 
@@ -39,7 +40,7 @@ class TestEmojiUtils:
 		def test(shrug_emoji):
 			for message, reactions in messages.items():
 				assert tuple(emoji.get_poll_emoji(message)) \
-				== reactions + tuple(shrug_emoji)
+					== reactions + (shrug_emoji,)
 
 		for date, shrug_emoji in self.shrug_emoji.items():
 			with freeze_time(date):
@@ -138,3 +139,10 @@ class TestEmojiUtils:
 		for date, shrug_emoji in self.shrug_emoji.items():
 			with freeze_time(date):
 				assert emoji.get_shrug_emoji() == shrug_emoji
+
+		with freeze_time(self.halloween):
+			# get the shrug emoji 100 times on halloween
+			responses = {emoji.get_shrug_emoji() for _ in range(100)}
+			assert len(responses) == 2 # 2 unique emoji
+			# the only two responses we get should be these two
+			assert len({'\N{jack-o-lantern}', '\N{ghost}'} ^ responses) == 0
