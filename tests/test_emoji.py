@@ -18,7 +18,7 @@ class TestEmojiUtils:
 		cls.shrug_emoji = {
 			cls.non_holiday: '🤷',
 			cls.april_fools: '🦑',
-			cls.five_nine: ':fsociety:376004430929199114',
+			cls.five_nine: ':fsociety:376935242029727745',
 		}
 
 

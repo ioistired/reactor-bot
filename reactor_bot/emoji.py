@@ -76,7 +76,7 @@ def get_digit_emoji(digit: str):
 def get_shrug_emoji():
 	shrug_emoji = {
 		'April Fools': ('🦑',),
-		'Five/Nine': (':fsociety:376004430929199114',),
+		'Five/Nine': (':fsociety:376935242029727745',),
 		'Halloween': ('\N{jack-o-lantern}', '\N{ghost}'),
 	}
 
