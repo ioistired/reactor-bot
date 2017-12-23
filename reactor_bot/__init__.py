@@ -6,6 +6,7 @@
 __version__ = '3.5.0'
 __author__ = 'Benjamin Mintz <bmintz@protonmail.com>'
 
+from datetime import datetime
 import sys
 import time
 
@@ -61,3 +62,31 @@ async def react_safe(message, reaction):
 		# some of them are going to be bunk
 		# but that shouldn't stop the whole poll
 		pass
+
+
+bot.remove_command('help')
+
+@bot.command()
+async def help(context):
+	embed = discord.Embed(
+		title='Help for Reactor',
+		timestamp=datetime.utcfromtimestamp(1514021784))
+
+	embed.add_field(
+		name='ping',
+		value='Usage: `poll:ping`\n'
+			+ "Shows the bots latency to Discord's servers")
+	embed.add_field(
+		name='Poll',
+		value='Usage: `poll: <your message here>`\n'
+			+ '👍, 👎, and 🤷 will be added as reactions to your message.')
+	embed.add_field(
+		name='Multi poll',
+		value='Usage: ```poll: [poll title]\n'
+			+ '<emoji> [option 1]\n'
+			+ '<emoji> [option 2]\n<emoji> [option 3]...```\n'
+			+ '`<emoji>` Can be a custom emote, a number, or a letter.'
+			+ '\nAll the emoji you specified will be added to the message,'
+			+ 'as well as :shrug:')
+
+	await context.send(embed=embed)
