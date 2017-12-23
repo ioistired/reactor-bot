@@ -15,8 +15,7 @@ from discord.ext import commands
 from reactor_bot import emoji
 
 
-bot = commands.Bot(command_prefix='poll')
-
+bot = commands.Bot(command_prefix='poll:')
 
 @bot.event
 async def on_ready():
@@ -26,10 +25,17 @@ async def on_ready():
 	print('ID:', bot.user.id)
 	print('----------------------')
 
+# since discord.py doesn't allow for commands with no name,
+# (poll: foo) we have to process them manually in that case
+@bot.event
+async def on_message(message):
+	content = message.content
+	if message and message.content.split()[0] == bot.command_prefix:
+		await reaction_poll(message)
+	await bot.process_commands(message)
 
-@bot.command(name=':')
-async def reaction_poll(context):
-	message = context.message
+
+async def reaction_poll(message):
 	seen_reactions = set()
 	for reaction in emoji.get_poll_emoji(message.content):
 		if reaction not in seen_reactions:
