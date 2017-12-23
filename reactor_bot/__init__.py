@@ -20,11 +20,11 @@ bot = commands.Bot(command_prefix='poll:')
 
 @bot.event
 async def on_ready():
-	print('----------------------')
-	print('Logged in as:')
-	print('Username:', bot.user.name)
-	print('ID:', bot.user.id)
-	print('----------------------')
+	message = 'Logged in as: %s' % bot.user
+	separator = '━' * len(message)
+	print(separator, message, separator, sep='\n')
+	await bot.change_presence(game=discord.Game(name='poll:help'))
+
 
 # since discord.py doesn't allow for commands with no name,
 # (poll: foo) we have to process them manually in that case
