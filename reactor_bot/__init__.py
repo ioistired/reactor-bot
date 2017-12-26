@@ -18,6 +18,14 @@ from reactor_bot import emoji
 
 bot = commands.Bot(command_prefix='poll:')
 
+NOSHRUG_KEYWORDS = set()
+for no in ('no', '⛔', '🚫'):
+	for shrug in ('shrug', '🤷'):
+		NOSHRUG_KEYWORDS.add(no+shrug)
+		NOSHRUG_KEYWORDS.add(no+' '+shrug)
+NOSHRUG_KEYWORDS = frozenset(NOSHRUG_KEYWORDS)
+
+
 @bot.event
 async def on_ready():
 	message = 'Logged in as: %s' % bot.user
@@ -31,14 +39,18 @@ async def on_ready():
 @bot.event
 async def on_message(message):
 	content = message.content
-	if message and message.content.split()[0] == bot.command_prefix:
+	if content and content.split()[0] == bot.command_prefix:
 		await reaction_poll(message)
 	await bot.process_commands(message)
 
 
 async def reaction_poll(message):
+	content = message.content
 	seen_reactions = set()
-	for reaction in emoji.get_poll_emoji(message.content):
+
+	shrug = none(keyword in content for keyword in NOSHRUG_KEYWORDS)
+
+	for reaction in emoji.get_poll_emoji(content, shrug):
 		if reaction not in seen_reactions:
 			seen_reactions.add(reaction)
 			await react_safe(message, reaction)
@@ -90,3 +102,7 @@ async def help(context):
 			+ 'as well as :shrug:')
 
 	await context.send(embed=embed)
+
+
+def none(iterable):
+	return not any(iterable)

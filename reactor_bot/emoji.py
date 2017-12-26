@@ -7,11 +7,13 @@ from datetime import date
 import random
 
 
-def get_poll_emoji(message):
+def get_poll_emoji(message, shrug=True):
 	"""generate the proper emoji to react to any poll message"""
 	# first line is poll title (ignored)
 	# only get the first 19 lines, otherwise there'd be no room for 🤷
-	message = message.split('\n')[1:20]
+	# but if the user doesn't want shrug, get the first 20
+	message = message.split('\n')[1:21 - shrug] # tbh this is a hack
+	print(len(message))
 	if len(message) > 0:
 		# ignore the first line, which is the command line
 		for line in message:
@@ -20,9 +22,8 @@ def get_poll_emoji(message):
 	else:
 		yield from ('👍', '👎')
 
-	# no matter what, not knowing is always an option
-	# TODO make this configurable anyway
-	yield get_shrug_emoji()
+	if shrug:
+		yield get_shrug_emoji()
 
 
 def parse_starting_emoji(line):
