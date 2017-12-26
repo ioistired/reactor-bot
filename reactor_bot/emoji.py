@@ -47,7 +47,7 @@ def parse_emoji(text):
 	"""
 
 	# match server emoji
-	custom_emoji_match = re.search(r'^<(:[\w_]*:\d*)>', text)
+	custom_emoji_match = re.search(r'^<(a?:[\w_]*:\d*)>', text)
 
 	if custom_emoji_match:
 		# ignore the <> on either side
