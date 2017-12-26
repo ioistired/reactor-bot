@@ -9,9 +9,12 @@ import random
 
 def get_poll_emoji(message):
 	"""generate the proper emoji to react to any poll message"""
-	if message.count('\n') > 0:
+	# first line is poll title (ignored)
+	# only get the first 19 lines, otherwise there'd be no room for 🤷
+	message = message.split('\n')[1:20]
+	if len(message) > 0:
 		# ignore the first line, which is the command line
-		for line in message.split('\n')[1:]:
+		for line in message:
 			if line:
 				yield parse_starting_emoji(line)
 	else:
