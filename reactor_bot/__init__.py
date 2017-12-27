@@ -16,7 +16,8 @@ from discord.ext import commands
 from reactor_bot import emoji
 
 
-bot = commands.Bot(command_prefix='poll:')
+prefixes = [capitalization + ':' for capitalization in ('Poll', 'poll', 'POLL')]
+bot = commands.Bot(command_prefix=commands.when_mentioned_or(*prefixes))
 
 NOSHRUG_KEYWORDS = set()
 for no in ('no', '⛔', '🚫'):
@@ -38,10 +39,13 @@ async def on_ready():
 # (poll: foo) we have to process them manually in that case
 @bot.event
 async def on_message(message):
-	content = message.content
-	if content and content.split()[0] == bot.command_prefix:
-		await reaction_poll(message)
-	await bot.process_commands(message)
+	ctx = await bot.get_context(message)
+
+	if ctx.prefix or bot.user in message.mentions:
+		if ctx.command:
+			await bot.process_commands(message)
+		else:
+			await reaction_poll(message)
 
 
 async def reaction_poll(message):
