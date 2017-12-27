@@ -21,7 +21,13 @@ def get_poll_emoji(message, shrug=True):
 		yield from ('👍', '👎')
 
 	if shrug:
-		yield get_shrug_emoji()
+		yield '🤷'
+
+	# TODO there's no way to disable this.
+	# Evaluate whether that's a good thing.
+	easter_egg_emoji = get_easter_egg_emoji()
+	if easter_egg_emoji is not None:
+		yield easter_egg_emoji
 
 
 def parse_starting_emoji(line):
@@ -75,26 +81,18 @@ def get_digit_emoji(digit: str):
 	return digit + '\N{combining enclosing keycap}'
 
 
-def get_shrug_emoji():
+def get_easter_egg_emoji():
 	shrug_emoji = {
-		'April Fools': ('🦑',),
-		'Five/Nine': (':fsociety:376935242029727745',),
-		'Halloween': ('\N{jack-o-lantern}', '\N{ghost}'),
+		(4, 1): ('🦑', '\N{octopus}'),
+		(5, 9): (':fsociety:376935242029727745',),
+		(10, 31): ('\N{jack-o-lantern}', '\N{ghost}'),
 	}
 
-	# random.choice(a) s.t. len(a) == 1 is always a[0]
-	# so if there's more than one shrug emoji, pick one
-	# else, use the only one available
-	return random.choice(shrug_emoji.get(_get_holiday(), '🤷'))
-
-
-def _get_holiday():
 	today = date.today()
+	shrug_emoji = shrug_emoji.get((today.month, today.day))
 
-	holidays = {
-		(4, 1): 'April Fools',
-		(5, 9): 'Five/Nine',
-		(10, 31): 'Halloween',
-	}
-
-	return holidays.get((today.month, today.day))
+	if shrug_emoji is not None:
+		# random.choice(a) s.t. len(a) == 1 is always a[0]
+		# so if there's more than one shrug emoji, pick one
+		# else, use the only one available
+		return random.choice(shrug_emoji)
