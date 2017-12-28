@@ -15,10 +15,10 @@ class TestEmojiUtils:
 		cls.five_nine = date(2017, 5, 9)
 		cls.halloween = date(2017, 10, 31)
 
-		cls.shrug_emoji = {
-			cls.non_holiday: '🤷',
-			cls.april_fools: '🦑',
-			cls.five_nine: ':fsociety:376935242029727745',
+		cls.easter_egg_emoji = {
+			cls.april_fools: {'🦑', '\N{octopus}'},
+			cls.five_nine: {':fsociety:376935242029727745'},
+			cls.halloween: {'\N{jack-o-lantern}', '\N{ghost}'},
 		}
 
 
@@ -37,14 +37,14 @@ class TestEmojiUtils:
 			'poll: Haskell lang best lang?': ('👍', '👎'),
 		}
 
-		def test(shrug_emoji):
-			for message, reactions in messages.items():
-				assert tuple(emoji.get_poll_emoji(message)) \
-					== reactions + (shrug_emoji,)
-
-		for date, shrug_emoji in self.shrug_emoji.items():
+		for date, easter_egg_emoji in self.easter_egg_emoji.items():
 			with freeze_time(date):
-				test(shrug_emoji)
+				for message, reactions in messages.items():
+					poll_emoji = tuple(emoji.get_poll_emoji(message))
+					# skip the easter egg emoji
+					print(poll_emoji[:-1], reactions)
+					assert poll_emoji[:-1] == reactions + ('🤷',)
+					assert poll_emoji[-1] in easter_egg_emoji
 
 
 	def test_extract_emoji(self):
@@ -53,7 +53,8 @@ class TestEmojiUtils:
 			'🐕 dog sandwiches': '🐕',
 			'3 blind mice': '3',
 			'🇺🇸 flags': '🇺🇸',
-			'<:python3:232720527448342530> python3!': '<:python3:232720527448342530>',
+			'<:python3:232720527448342530> python3!':
+				'<:python3:232720527448342530>',
 		}
 
 		for input, output in lines_and_emojis.items():
@@ -135,14 +136,14 @@ class TestEmojiUtils:
 			assert emoji.get_digit_emoji(input) == output
 
 
-	def test_get_shrug_emoji(self):
-		for date, shrug_emoji in self.shrug_emoji.items():
-			with freeze_time(date):
-				assert emoji.get_shrug_emoji() == shrug_emoji
+	def test_easter_egg_emoji(self):
 
-		with freeze_time(self.halloween):
-			# get the shrug emoji 100 times on halloween
-			responses = {emoji.get_shrug_emoji() for _ in range(100)}
-			assert len(responses) == 2 # 2 unique emoji
-			# the only two responses we get should be these two
-			assert len({'\N{jack-o-lantern}', '\N{ghost}'} ^ responses) == 0
+		for date, easter_egg_emoji in self.easter_egg_emoji.items():
+			with freeze_time(date):
+				# get the shrug emoji 100 times on halloween
+				# there is a 1/2**100 chance that this test will fail
+				responses = {emoji.get_easter_egg_emoji() for _ in range(100)}
+				print(date, 'expected', *easter_egg_emoji, 'got', *responses)
+				assert len(responses) == len(easter_egg_emoji) # 2 unique emoji
+				# the only two responses we get should be these two
+				assert len(easter_egg_emoji ^ responses) == 0
