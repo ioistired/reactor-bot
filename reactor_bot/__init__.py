@@ -60,16 +60,6 @@ async def reaction_poll(message):
 			await react_safe(message, reaction)
 
 
-@bot.command()
-async def ping(context):
-	pong = '🏓 Pong! '
-	start = time.time()
-	message = await context.send(pong)
-	rtt = (time.time() - start) * 1000
-	# 10 µs is plenty precise
-	await message.edit(content=pong + '│{:.2f}ms'.format(rtt))
-
-
 async def react_safe(message, reaction):
 	try:
 		await message.add_reaction(reaction)
@@ -106,6 +96,16 @@ async def help(context):
 			+ 'as well as :shrug:')
 
 	await context.send(embed=embed)
+
+
+@bot.command()
+async def ping(context):
+	pong = '🏓 Pong! '
+	start = time.time()
+	message = await context.send(pong)
+	rtt = (time.time() - start) * 1000
+	# 10 µs is plenty precise
+	await message.edit(content=pong + '│{:.2f}ms'.format(rtt))
 
 
 def none(iterable):
