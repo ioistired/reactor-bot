@@ -66,7 +66,7 @@ def parse_emoji(text):
 
 
 def get_letter_emoji(letter):
-	if letter == 'B' and _get_holiday() == 'April Fools':
+	if letter == 'B' and _date() == (4, 1):
 		return '🅱'
 
 	start = ord('🇦')
@@ -88,11 +88,14 @@ def get_easter_egg_emoji():
 		(10, 31): ('\N{jack-o-lantern}', '\N{ghost}'),
 	}
 
-	today = date.today()
-	shrug_emoji = shrug_emoji.get((today.month, today.day))
+	shrug_emoji = shrug_emoji.get(_date())
 
 	if shrug_emoji is not None:
 		# random.choice(a) s.t. len(a) == 1 is always a[0]
 		# so if there's more than one shrug emoji, pick one
 		# else, use the only one available
 		return random.choice(shrug_emoji)
+
+def _date():
+	today = date.today()
+	return today.month, today.day
