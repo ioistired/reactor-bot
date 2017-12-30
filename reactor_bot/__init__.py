@@ -116,7 +116,7 @@ async def prompt_boolean(context, question, check):
 			return False
 
 
-@bot.command(name='interactive')
+@bot.command(name='make')
 async def interactive_poll(context):
 	def check(m):
 		return m.author == context.author and m.channel == context.channel
