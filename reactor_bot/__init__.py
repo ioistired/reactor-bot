@@ -7,14 +7,17 @@ __version__ = '4.2.1'
 __author__ = 'Benjamin Mintz <bmintz@protonmail.com>'
 
 from datetime import datetime
+from string import ascii_uppercase
 import sys
 import time
 
 import discord
+import inflect
 from discord.ext import commands
 
 from reactor_bot import emoji
 
+p = inflect.engine()
 
 prefixes = [capitalization + ':' for capitalization in ('Poll', 'poll', 'POLL')]
 bot = commands.Bot(command_prefix=commands.when_mentioned_or(*prefixes))
@@ -68,6 +71,113 @@ async def react_safe(message, reaction):
 		# some of them are going to be bunk
 		# but that shouldn't stop the whole poll
 		pass
+
+
+async def prompt(context, question, check):
+	await context.send(question)
+	return (await bot.wait_for('message', check=check)).content.strip()
+
+
+async def prompt_boolean(context, question, check):
+	yesses = [
+		'yes',
+		'y',
+		'true',
+		'\N{check mark}',
+		'\N{heavy check mark}',
+		'\N{white heavy check mark}',
+		'\N{ballot box with check}',
+		'<:check:314349398811475968>',
+		'<:Yes:359195592758394881>']
+	nos = [
+		'no',
+		'n',
+		'false',
+		'\N{cross mark}',
+		'\N{regional indicator symbol letter x}',
+		'\N{heavy multiplication x}',
+		'\N{ballot box with ballot}',
+		'\N{no entry}',
+		'\N{no entry sign}',
+		'<:xmark:314349398824058880>',
+		'<:No:359195592951332874>',]
+
+	await context.send(question)
+
+	while True:
+		response = await bot.wait_for('message', check=check)
+		response = (response
+			.content
+			.lower()
+			.strip())
+		if response in yesses:
+			return True
+		elif response in nos:
+			return False
+
+
+@bot.command(name='interactive')
+async def interactive_poll(context):
+	def check(m):
+		return m.author == context.author and m.channel == context.channel
+
+	async def get_message():
+		return (await bot.wait_for('message', check=check)).content
+
+	message = 'poll: '
+
+	await context.send(
+		'Hello. What would you like the title to be? '
+		'To leave it blank, just say "none".')
+
+	title = await get_message()
+	message += '' if title == 'none' else title
+	poll += ' (created by %s)' % context.author
+
+	query = (
+		'Cool so the '
+		+ ('title is ' + title if title else "re's no title") + '. '
+		+ 'Is this a yes/no poll?')
+	boolean_poll = await prompt_boolean(context, query, check)
+
+	query = 'Would you like to add a shrug emoji to the poll too?'
+	shrug = await prompt_boolean(context, query, check)
+
+	if not shrug:
+		message += ' noshrug'
+		max_options = 20
+	else:
+		max_options = 19
+
+	if boolean_poll:
+		await reaction_poll(await context.send(message))
+		return
+
+	message += '\n'
+	options = []
+	for i in range(1, max_options+1):
+		question = p.inflect(
+			'Alright. '
+			'''What's the ordinal(%d) option? To stop, say "stop".''' % i)
+
+		next_option = await prompt(
+			context,
+			question,
+			check
+		)
+		if next_option.lower() == 'stop':
+			break
+		options.append(next_option)
+
+	await reaction_poll(
+		await context.send(message + await poll_options(options)))
+
+
+async def poll_options(options):
+	poll_options = []
+	for i, option in enumerate(options):
+		poll_options.append('{} {}'.format(ascii_uppercase[i], option))
+	return '\n'.join(poll_options)
 
 
 bot.remove_command('help')
