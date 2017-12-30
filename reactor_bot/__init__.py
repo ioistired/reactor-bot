@@ -132,7 +132,7 @@ async def interactive_poll(context):
 
 	title = await get_message()
 	message += '' if title == 'none' else title
-	poll += ' (created by %s)' % context.author
+	message += ' (created by %s)' % context.author.mention
 
 	query = (
 		'Cool so the '
