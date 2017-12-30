@@ -209,6 +209,11 @@ async def help(context):
 
 
 @bot.command()
+async def invite(context):
+	await context.send('<https://discordapp.com/oauth2/authorize?client_id=323505480766849026&scope=bot&permissions=1088>')
+
+
+@bot.command()
 async def ping(context):
 	pong = '🏓 Pong! '
 	start = time.time()
