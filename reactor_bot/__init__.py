@@ -127,7 +127,7 @@ async def interactive_poll(context):
 	message = 'poll: '
 
 	await context.send(
-		'Hello. What would you like the title to be? '
+		'Hoi! What would you like the title to be? '
 		'To leave it blank, just say "none".')
 
 	title = await get_message()
@@ -135,7 +135,7 @@ async def interactive_poll(context):
 	message += ' (created by %s)' % context.author.mention
 
 	query = (
-		'Cool so the '
+		'Cool, so the '
 		+ ('title is ' + title if title else "re's no title") + '. '
 		+ 'Is this a yes/no poll?')
 	boolean_poll = await prompt_boolean(context, query, check)
@@ -186,7 +186,7 @@ bot.remove_command('help')
 async def help(context):
 	embed = discord.Embed(
 		title='Help for Reactor',
-		timestamp=datetime.utcfromtimestamp(1514021784))
+		timestamp=datetime.utcfromtimestamp(1514622678))
 
 	embed.add_field(
 		name='ping',
@@ -195,15 +195,24 @@ async def help(context):
 	embed.add_field(
 		name='Poll',
 		value='Usage: `poll: <your message here>`\n'
-			+ '👍, 👎, and 🤷 will be added as reactions to your message.')
+			+ '👍, 👎, and 🤷 will be added as reactions to your message, '
+			+ 'unless "noshrug" is found in the message.')
 	embed.add_field(
 		name='Multi poll',
 		value='Usage: ```poll: [poll title]\n'
 			+ '<emoji> [option 1]\n'
 			+ '<emoji> [option 2]\n<emoji> [option 3]...```\n'
-			+ '`<emoji>` Can be a custom emote, a number, or a letter.'
+			+ '`<emoji>` can be a custom emote, a number, or a letter.'
 			+ '\nAll the emoji you specified will be added to the message,'
-			+ 'as well as :shrug:')
+			+ 'as well as :shrug:. '
+			+ 'However, if you add "noshrug" or "⛔shrug" or similar, '
+			+ 'anywhere in the message, :shrug: will *not* be sent.')
+	embed.add_field(
+		name='Poll maker',
+		value='Usage: `poll:make`\n'
+			+ 'The bot will ask you everything it needs to know '
+			+ 'about the poll, and then send it for you.\n'
+			+ "Useful if you're not sure how to use the bot yet.")
 
 	await context.send(embed=embed)
 
