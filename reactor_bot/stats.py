@@ -23,21 +23,21 @@ class StatsAPI:
 		async with self.session.post(
 			url,
 			data=data,
-			headers=headers
-		) as resp:
+			headers=headers)
+		as resp:
 			print('[STATS]', self.config_section, end=' ')
 			if resp.status != 200:
 				print('failed with status code', await resp.status)
 			else:
 				print('response:', await resp.text())
 
-	
+
 	async def on_guild_join(self, server):
 		await self.send()
-	
+
 	async def on_guild_remove(self, server):
 		await self.send()
-	
+
 	async def on_ready(self):
 		await self.send()
 
@@ -55,9 +55,7 @@ class DiscordPwStats(StatsAPI):
 			data=json.dumps({'server_count': len(self.bot.guilds)}),
 			headers={
 				'Authorization': self.bot.config[self.config_section][self.config_key],
-				'Content-Type': 'application/json',
-			},
-		)
+				'Content-Type': 'application/json'})
 
 
 class DiscordBotList(StatsAPI):
@@ -74,9 +72,7 @@ class DiscordBotList(StatsAPI):
 			data=json.dumps({'server_count': len(self.bot.guilds)}),
 			headers={
 				'Authorization': self.bot.config[self.config_section][self.config_key],
-				'Content-Type': 'application/json',
-			},
-		)
+				'Content-Type': 'application/json'})
 
 
 class Discordlist(StatsAPI):
@@ -92,10 +88,8 @@ class Discordlist(StatsAPI):
 			'https://bots.discordlist.net/api',
 			data=json.dumps({
 				'token': self.bot.config[self.config_section][self.config_key],
-				'server_count': len(self.bot.guilds),
-			}),
-			headers={'Content-Type': 'application/json'},
-		)
+				'server_count': len(self.bot.guilds)}),
+			headers={'Content-Type': 'application/json'})
 
 
 def setup(bot):
@@ -105,5 +99,4 @@ def setup(bot):
 		else:
 			print(
 				Cog.config_section,
-				"was not loaded! Please make sure it's configured properly."
-			)
+				"was not loaded! Please make sure it's configured properly.")

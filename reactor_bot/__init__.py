@@ -163,8 +163,7 @@ async def interactive_poll(context):
 		next_option = await prompt(
 			context,
 			question,
-			check
-		)
+			check)
 		if next_option.lower() == 'stop':
 			break
 		options.append(next_option)
