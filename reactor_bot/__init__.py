@@ -135,8 +135,8 @@ async def interactive_poll(context):
 	message += ' (created by %s)' % context.author.mention
 
 	query = (
-		'Cool, so the '
-		+ ('title is ' + title if title else "re's no title") + '. '
+		'Cool, so the'
+		+ ("re's no title" if title == 'none' else ' title is ' + title) + '. '
 		+ 'Is this a yes/no poll?')
 	boolean_poll = await prompt_boolean(context, query, check)
 
