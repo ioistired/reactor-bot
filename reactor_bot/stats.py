@@ -10,7 +10,7 @@ class StatsAPI:
 	# for much of this
 	def __init__(self, bot):
 		self.bot = bot
-		self.session = aiohttp.ClientSession()
+		self.session = aiohttp.ClientSession(loop=bot.loop)
 		self.config_key = 'api_token'
 
 
@@ -23,11 +23,11 @@ class StatsAPI:
 		async with self.session.post(
 			url,
 			data=data,
-			headers=headers)
+			headers=headers)\
 		as resp:
 			print('[STATS]', self.config_section, end=' ')
 			if resp.status != 200:
-				print('failed with status code', await resp.status)
+				print('failed with status code', resp.status)
 			else:
 				print('response:', await resp.text())
 
