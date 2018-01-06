@@ -225,7 +225,9 @@ async def help(context):
 
 @bot.command()
 async def invite(context):
-	await context.send('<https://discordapp.com/oauth2/authorize?client_id=323505480766849026&scope=bot&permissions=1088>')
+	await context.send(
+		'<https://discordapp.com/oauth2/authorize'
+		'?client_id={}&scope=bot&permissions=273472>'.format(bot.user.id))
 
 
 @bot.command()
