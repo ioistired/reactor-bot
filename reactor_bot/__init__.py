@@ -51,6 +51,13 @@ async def on_message(message):
 			await reaction_poll(message)
 
 
+@bot.event
+async def on_message_edit(before, after):
+	if any(reaction.me for reaction in before.reactions):
+		await before.clear_reactions()
+	await on_message(after)
+
+
 async def reaction_poll(message):
 	content = message.content
 	seen_reactions = set()
