@@ -225,9 +225,20 @@ async def help(context):
 
 @bot.command()
 async def invite(context):
+	permission_names = (
+		'manage_messages', # needed to remove reactions on message edit
+		'send_messages', # needed for help message
+		# in case the user supplies an external emoji in a poll
+		'external_emojis',
+		'read_messages', # needed to act on commands
+		'add_reactions') # needed to add poll options
+	permissions = discord.Permissions()
+	permissions.update(**dict.fromkeys(permission_names, True))
+
 	await context.send(
 		'<https://discordapp.com/oauth2/authorize'
-		'?client_id={}&scope=bot&permissions=273472>'.format(bot.user.id))
+		'?client_id={}&scope=bot&permissions={}>'
+			.format(bot.user.id, permissions.value))
 
 
 @bot.command()
