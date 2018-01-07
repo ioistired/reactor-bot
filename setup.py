@@ -16,6 +16,7 @@ setuptools.setup(
 	install_requires=[
 		#'discord.py',
 		'appdirs',
+		'inflect',
 	],
 
 	extras_require={
