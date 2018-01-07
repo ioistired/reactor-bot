@@ -15,12 +15,14 @@ import discord
 import inflect
 from discord.ext import commands
 
-from reactor_bot import emoji
+from reactor_bot import emoji_utils as emoji
+
 
 p = inflect.engine()
 
 prefixes = [capitalization + ':' for capitalization in ('Poll', 'poll', 'POLL')]
 bot = commands.Bot(command_prefix=commands.when_mentioned_or(*prefixes))
+
 
 NOSHRUG_KEYWORDS = set()
 for no in ('no', '⛔', '🚫'):
