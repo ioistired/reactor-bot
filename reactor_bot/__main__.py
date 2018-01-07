@@ -19,7 +19,7 @@ def main():
 	bot.config = config
 
 	# place the extensions in order of priority
-	for extension in ('poll', 'misc', 'stats'):
+	for extension in ('poll', 'misc', 'admin', 'stats'):
 		print('Loading extension', extension)
 		try:
 			bot.load_extension('reactor_bot.cogs.' + extension)
