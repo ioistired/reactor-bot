@@ -42,5 +42,8 @@ async def on_message(message):
 @bot.event
 async def on_message_edit(before, after):
 	if any(reaction.me for reaction in before.reactions):
-		await before.clear_reactions()
+		try:
+			await before.clear_reactions()
+		except discord.errors.Forbidden:
+			pass
 	await on_message(after)
