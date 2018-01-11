@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from reactor_bot import emoji
+from reactor_bot import emoji_utils as emoji
 
 from datetime import date
 
