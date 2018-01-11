@@ -3,6 +3,7 @@
 
 from string import ascii_uppercase
 
+import discord
 from discord.ext import commands
 import inflect
 
@@ -25,24 +26,33 @@ class Poll:
 	@classmethod
 	async def reaction_poll(cls, message):
 		content = message.content
-		seen_reactions = set()
 
 		shrug = not any(keyword in content for keyword in cls.NOSHRUG_KEYWORDS)
 
+		seen_reactions = set()
+		reactions_added = False
 		for reaction in emoji.get_poll_emoji(content, shrug):
-			if reaction not in seen_reactions:
-				seen_reactions.add(reaction)
-				await cls.react_safe(message, reaction)
+			if reaction in seen_reactions:
+				continue
+			elif reaction is emoji.END_OF_POLL_EMOJI:
+				if not reactions_added:
+					return
+				# don't react with emoji.END_OF_POLL_EMOJI!
+				continue
+			if await cls.react_safe(message, reaction):
+				reactions_added = True
+			seen_reactions.add(reaction)
 
 	@staticmethod
 	async def react_safe(message, reaction):
 		try:
 			await message.add_reaction(reaction)
+			return True
 		except discord.errors.HTTPException:
 			# since we're trying to react with arbitrary emoji,
 			# some of them are going to be bunk
 			# but that shouldn't stop the whole poll
-			pass
+			return False
 
 	async def prompt(self, context, question, check):
 		await context.send(question)

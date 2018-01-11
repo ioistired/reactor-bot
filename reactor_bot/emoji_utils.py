@@ -6,6 +6,8 @@ import string
 from datetime import date
 import random
 
+# signifies the end of the poll emoji and start of shrug/easter eggs
+END_OF_POLL_EMOJI = object()
 
 def get_poll_emoji(message, shrug=True):
 	"""generate the proper emoji to react to any poll message"""
@@ -19,6 +21,10 @@ def get_poll_emoji(message, shrug=True):
 				yield parse_starting_emoji(line)
 	else:
 		yield from ('👍', '👎')
+
+	# this is so that the receiver knows to stop
+	# if no poll emoji were encountered
+	yield END_OF_POLL_EMOJI
 
 	if shrug:
 		yield '🤷'
