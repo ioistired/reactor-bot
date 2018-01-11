@@ -7,6 +7,7 @@ from datetime import date
 import random
 
 # signifies the end of the poll emoji and start of shrug/easter eggs
+# I could use None here but I wanted a descriptive name
 END_OF_POLL_EMOJI = object()
 
 def get_poll_emoji(message, shrug=True):

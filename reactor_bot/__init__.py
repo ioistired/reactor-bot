@@ -45,5 +45,5 @@ async def on_message_edit(before, after):
 		try:
 			await before.clear_reactions()
 		except discord.errors.Forbidden:
-			pass
+			return
 	await on_message(after)
