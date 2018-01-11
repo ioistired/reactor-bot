@@ -32,7 +32,7 @@ async def on_ready():
 async def on_message(message):
 	context = await bot.get_context(message)
 
-	if context.prefix or bot.user in message.mentions:
+	if context.prefix:
 		if context.command:
 			await bot.process_commands(message)
 		else:
