@@ -79,4 +79,4 @@ class Meta:
 
 
 def setup(bot):
-	bot.add_cog(Misc(bot))
+	bot.add_cog(Meta(bot))
