@@ -42,8 +42,8 @@ class TestEmojiUtils:
 				for message, reactions in messages.items():
 					poll_emoji = tuple(emoji.get_poll_emoji(message))
 					# skip the easter egg emoji
-					print(poll_emoji[:-1], reactions)
-					assert poll_emoji[:-1] == reactions + ('🤷',)
+					assert (poll_emoji[:-1]
+						== reactions + (emoji.END_OF_POLL_EMOJI, '🤷',))
 					assert poll_emoji[-1] in easter_egg_emoji
 
 
