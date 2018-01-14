@@ -11,6 +11,8 @@ from reactor_bot import emoji_utils as emoji
 
 
 class Poll:
+	"""These commands are probably what you added the bot for."""
+
 	p = inflect.engine()
 
 	NOSHRUG_KEYWORDS = set()
@@ -99,6 +101,9 @@ class Poll:
 
 	@commands.command(name='make')
 	async def interactive_poll(self, context):
+		"""Lets you make a poll by answering a series of questions.
+		Useful if you don't know how to use the bot yet.
+		"""
 		def check(m):
 			return m.author == context.author and m.channel == context.channel
 

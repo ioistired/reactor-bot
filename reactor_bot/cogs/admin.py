@@ -5,6 +5,8 @@ from discord.ext import commands
 
 
 class Admin:
+	"""Commands for admins only!"""
+
 	def __init__(self, bot):
 		self.bot = bot
 		self.success_emoji = (
@@ -14,6 +16,9 @@ class Admin:
 	@commands.command()
 	@commands.is_owner()
 	async def reload(self, context, *, cog: str):
+		"""Reload a cog.
+		The cog is expected to be located in `reactor_bot.cogs`.
+		"""
 		cog = 'reactor_bot.cogs.' + cog
 
 		try:

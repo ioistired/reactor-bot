@@ -6,8 +6,11 @@ import aiohttp
 
 
 class StatsAPI:
-	# credit to "ﾠﾠﾠﾠ#7887" on the Discord Bots List guild
-	# for much of this
+	"""Various Stats APIs for bot lists
+	credit to "ﾠﾠﾠﾠ#7887" on the Discord Bots List guild
+	for much of this
+	"""
+
 	def __init__(self, bot):
 		self.bot = bot
 		self.session = aiohttp.ClientSession(loop=bot.loop)

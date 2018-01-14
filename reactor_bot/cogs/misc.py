@@ -9,6 +9,8 @@ from discord.ext.commands import command
 
 
 class Misc:
+	"""Miscellaneous commands that don't belong in any other category"""
+
 	def __init__(self, bot):
 		self.bot = bot
 		bot.remove_command('help')
@@ -72,6 +74,7 @@ class Misc:
 
 	@command()
 	async def ping(self, context):
+		"""Shows the bots latency to Discord's servers"""
 		pong = '🏓 Pong! '
 		start = time.time()
 		message = await context.send(pong)
