@@ -1,5 +1,6 @@
 import setuptools
 
+
 setuptools.setup(
 	name='reactor_bot',
 	version='4.5.2',
@@ -16,30 +17,23 @@ setuptools.setup(
 	install_requires=[
 		#'discord.py',
 		'appdirs',
-		'inflect',
-	],
+		'inflect',],
 
 	extras_require={
 		'dev': [
-			'bumpversion',
-		],
+			'bumpversion',],
 
 		'test': [
 			'tox',
 			'pytest',
 			'pytest-cov',
-			'freezegun',
-		],
-	},
+			'freezegun',],,
 
 	entry_points={
-		'console_scripts': 'reactor-bot = reactor_bot.__main__:main',
-	},
+		'console_scripts': 'reactor-bot = reactor_bot.__main__:main',},
 
 	classifiers=[
 		'Development Status :: 4 - Beta',
 		'Programming Language :: Python',
 		'Programming Language :: Python :: 3.5',
-		'License :: OSI Approved :: MIT License',
-	],
-)
+		'License :: OSI Approved :: MIT License',],)
