@@ -60,7 +60,8 @@ class Misc:
 			# in case the user supplies an external emoji in a poll
 			'external_emojis',
 			'read_messages', # needed to act on commands
-			'add_reactions') # needed to add poll options
+			'add_reactions', # needed to add poll options
+			'embed_links') # needed to send the help message
 		permissions = discord.Permissions()
 		permissions.update(**dict.fromkeys(permission_names, True))
 
