@@ -71,11 +71,8 @@ class Meta:
 		permissions = discord.Permissions()
 		permissions.update(**dict.fromkeys(permission_names, True))
 
-		id = (await self.bot.application_info()).id
 		await context.send(
-			'<https://discordapp.com/oauth2/authorize'
-			'?client_id={}&scope=bot&permissions={}>'
-				.format(id, permissions.value))
+			'<%s>' % discord.utils.oauth_url(self.bot.client_id, perms))
 
 
 def setup(bot):
