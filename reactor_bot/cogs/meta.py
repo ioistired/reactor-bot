@@ -13,47 +13,27 @@ class Meta:
 
 	def __init__(self, bot):
 		self.bot = bot
-		bot.remove_command('help')
+		self.bot.remove_command('help')
 
-	@command()
-	async def help(self, context):
-		"""This message yer lookin' at right here, pardner."""
-		embed = discord.Embed(
-			title='Help for Reactor',
-			timestamp=datetime.utcfromtimestamp(1515291012))
+    async def help(self, ctx, *, command: str = None):
+        """Shows help about a command or the bot"""
+        try:
+            if command is None:
+                p = await HelpPaginator.from_bot(ctx)
+            else:
+                entity = self.bot.get_cog(command) or self.bot.get_command(command)
 
-		embed.add_field(
-			name='Poll',
-			value='Usage: `poll: <your message here>`\n'
-				+ '👍, 👎, and 🤷 will be added as reactions to your message, '
-				+ 'unless "noshrug" is found in the message.')
-		embed.add_field(
-			name='Multi poll',
-			value='Usage: ```poll: [poll title]\n'
-				+ '<emoji> [option 1]\n'
-				+ '<emoji> [option 2]\n<emoji> [option 3]...```\n'
-				+ '`<emoji>` can be a custom emote, a number, or a letter.'
-				+ '\nAll the emoji you specified will be added to the message,'
-				+ 'as well as :shrug:. '
-				+ 'However, if you add "noshrug" or "⛔shrug" or similar, '
-				+ 'anywhere in the message, :shrug: will *not* be sent.')
-		embed.add_field(
-			name='Poll maker',
-			value='Usage: `poll:make`\n'
-				+ 'The bot will ask you everything it needs to know '
-				+ 'about the poll, and then send it for you.\n'
-				+ "Useful if you're not sure how to use the bot yet.")
-		embed.add_field(
-			name='invite',
-			value='Usage: `poll:invite`\n'
-				+ 'Sends you an invite link '
-				+ 'so you can add the bot to your own server')
-		embed.add_field(
-			name='ping',
-			value='Usage: `poll:ping`\n'
-				+ "Shows the bots latency to Discord's servers")
+                if entity is None:
+                    clean = command.replace('@', '@\u200b')
+                    return await ctx.send(f'Command or category "{clean}" not found.')
+                elif isinstance(entity, commands.Command):
+                    p = await HelpPaginator.from_command(ctx, entity)
+                else:
+                    p = await HelpPaginator.from_cog(ctx, entity)
 
-		await context.send(embed=embed)
+            await p.paginate()
+        except Exception as e:
+			await ctx.send(e)
 
 	@command()
 	async def invite(self, context):
@@ -71,11 +51,8 @@ class Meta:
 		permissions = discord.Permissions()
 		permissions.update(**dict.fromkeys(permission_names, True))
 
-		id = (await self.bot.application_info()).id
 		await context.send(
-			'<https://discordapp.com/oauth2/authorize'
-			'?client_id={}&scope=bot&permissions={}>'
-				.format(id, permissions.value))
+			'<%s>' % discord.utils.oauth_url(self.bot.client_id, perms))
 
 
 def setup(bot):
