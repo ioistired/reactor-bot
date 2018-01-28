@@ -20,30 +20,30 @@ bot = commands.Bot(command_prefix=commands.when_mentioned_or(*prefixes))
 
 @bot.event
 async def on_ready():
-	message = 'Logged in as: %s' % bot.user
-	separator = '━' * len(message)
-	print(separator, message, separator, sep='\n')
-	await bot.change_presence(game=discord.Game(name='poll:help'))
+    message = 'Logged in as: %s' % bot.user
+    separator = '━' * len(message)
+    print(separator, message, separator, sep='\n')
+    await bot.change_presence(game=discord.Game(name='poll:help'))
 
 
 # since discord.py doesn't allow for commands with no name,
 # (poll: foo) we have to process them manually in that case
 @bot.event
 async def on_message(message):
-	context = await bot.get_context(message)
+    context = await bot.get_context(message)
 
-	if context.prefix:
-		if context.command:
-			await bot.process_commands(message)
-		else:
-			await Poll.reaction_poll(message)
+    if context.prefix:
+        if context.command:
+            await bot.process_commands(message)
+        else:
+            await Poll.reaction_poll(message)
 
 
 @bot.event
 async def on_message_edit(before, after):
-	if any(reaction.me for reaction in before.reactions):
-		try:
-			await before.clear_reactions()
-		except discord.errors.Forbidden:
-			return
-	await on_message(after)
+    if any(reaction.me for reaction in before.reactions):
+        try:
+            await before.clear_reactions()
+        except discord.errors.Forbidden:
+            return
+    await on_message(after)
