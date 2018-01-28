@@ -18,7 +18,8 @@ class TestEmojiUtils:
         cls.easter_egg_emoji = {
             cls.april_fools: {'🦑', '\N{octopus}'},
             cls.five_nine: {':fsociety:376935242029727745'},
-            cls.halloween: {'\N{jack-o-lantern}', '\N{ghost}'}}
+            cls.halloween: {'\N{jack-o-lantern}', '\N{ghost}'},
+        }
 
 
     def test_get_poll_emoji(self):
@@ -33,15 +34,18 @@ class TestEmojiUtils:
             'foo\n'
             'bar': ('🇲', '🐕', '3⃣', '🇺🇸', 'foo', 'bar'),
 
-            'poll: Haskell lang best lang?': ('👍', '👎')}
+            'poll: Haskell lang best lang?': ('👍', '👎'),
+        }
 
         for date, easter_egg_emoji in self.easter_egg_emoji.items():
             with freeze_time(date):
                 for message, reactions in messages.items():
                     poll_emoji = tuple(emoji.get_poll_emoji(message))
                     # skip the easter egg emoji
-                    assert (poll_emoji[:-1]
-                        == reactions + (emoji.END_OF_POLL_EMOJI, '🤷',))
+                    assert (
+                        poll_emoji[:-1]
+                        == reactions + (emoji.END_OF_POLL_EMOJI, '🤷',)
+                    )
                     assert poll_emoji[-1] in easter_egg_emoji
 
 
@@ -100,7 +104,8 @@ class TestEmojiUtils:
             'W': '🇼',
             'X': '🇽',
             'Y': '🇾',
-            'Z': '🇿'}
+            'Z': '🇿',
+        }
 
         # one of these tests will fail on april fools
         # (hint: it's "B")
@@ -124,7 +129,8 @@ class TestEmojiUtils:
             '6': '6⃣',
             '7': '7⃣',
             '8': '8⃣',
-            '9': '9⃣'}
+            '9': '9⃣',
+        }
 
         for input, output in io_map.items():
             assert emoji.get_digit_emoji(input) == output

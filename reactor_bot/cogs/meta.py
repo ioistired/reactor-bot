@@ -19,13 +19,15 @@ class Meta:
         """This message yer lookin' at right here, pardner."""
         embed = discord.Embed(
             title='Help for Reactor',
-            timestamp=datetime.utcfromtimestamp(1515291012))
+            timestamp=datetime.utcfromtimestamp(1515291012)
+        )
 
         embed.add_field(
             name='Poll',
             value='Usage: `poll: <your message here>`\n'
                   + '👍, 👎, and 🤷 will be added as reactions to your message, '
-                  + 'unless "noshrug" is found in the message.')
+                  + 'unless "noshrug" is found in the message.'
+            )
         embed.add_field(
             name='Multi poll',
             value='Usage: ```poll: [poll title]\n'
@@ -36,7 +38,8 @@ class Meta:
                   + 'All the emoji you specified will be added to the message,'
                   + 'as well as :shrug:. '
                   + 'However, if you add "noshrug" or "⛔shrug" or similar, '
-                  + 'anywhere in the message, :shrug: will *not* be sent.')
+                  + 'anywhere in the message, :shrug: will *not* be sent.'
+            )
         embed.add_field(
             name='Poll maker',
             value='Usage: `poll:make`\n'
@@ -47,11 +50,13 @@ class Meta:
             name='invite',
             value='Usage: `poll:invite`\n'
                   + 'Sends you an invite link '
-                  + 'so you can add the bot to your own server')
+                  + 'so you can add the bot to your own server'
+            )
         embed.add_field(
             name='ping',
             value='Usage: `poll:ping`\n'
-                  + "Shows the bots latency to Discord's servers")
+                  + "Shows the bots latency to Discord's servers"
+            )
 
         await context.send(embed=embed)
 
@@ -67,12 +72,14 @@ class Meta:
             'external_emojis',
             'read_messages',  # needed to act on commands
             'add_reactions',  # needed to add poll options
-            'embed_links')  # needed to send the help message
+            'embed_links',  # needed to send the help message
+        )
         permissions = discord.Permissions()
         permissions.update(**dict.fromkeys(permission_names, True))
 
         await context.send(
-            '<%s>' % discord.utils.oauth_url(self.bot.client_id, permissions))
+            '<%s>' % discord.utils.oauth_url(self.bot.client_id, permissions)
+        )
 
 
 def setup(bot):

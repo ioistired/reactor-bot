@@ -57,7 +57,9 @@ class DiscordPwStats(StatsAPI):
             data=json.dumps({'server_count': len(self.bot.guilds)}),
             headers={
                 'Authorization': self.auth_token,
-                'Content-Type': 'application/json'})
+                'Content-Type': 'application/json'
+            }
+        )
 
 
 class DiscordBotList(StatsAPI):
@@ -72,7 +74,9 @@ class DiscordBotList(StatsAPI):
             data=json.dumps({'server_count': len(self.bot.guilds)}),
             headers={
                 'Authorization': self.auth_token,
-                'Content-Type': 'application/json'})
+                'Content-Type': 'application/json'
+            }
+        )
 
 
 class Discordlist(StatsAPI):
@@ -87,7 +91,8 @@ class Discordlist(StatsAPI):
             data=json.dumps({
                 'token': self.auth_token,
                 'server_count': len(self.bot.guilds)}),
-            headers={'Content-Type': 'application/json'})
+            headers={'Content-Type': 'application/json'}
+        )
 
 
 def setup(bot):

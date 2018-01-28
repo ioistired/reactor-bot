@@ -76,7 +76,8 @@ class Poll:
             '\N{white heavy check mark}',
             '\N{ballot box with check}',
             '<:check:314349398811475968>',
-            '<:Yes:359195592758394881>']
+            '<:Yes:359195592758394881>',
+        ]
         nos = [
             'no',
             'n',
@@ -89,7 +90,8 @@ class Poll:
             '\N{no entry}',
             '\N{no entry sign}',
             '<:xmark:314349398824058880>',
-            '<:No:359195592951332874>']
+            '<:No:359195592951332874>',
+        ]
 
         await context.send(question)
 
@@ -116,7 +118,8 @@ class Poll:
 
         await context.send(
             'Hoi! What would you like the title to be? '
-            'To leave it blank, just say "none".')
+            'To leave it blank, just say "none".'
+        )
 
         title = await get_message()
         message += '' if title == 'none' else title
@@ -125,7 +128,8 @@ class Poll:
         query = (
             'Cool, so the'
             + ("re's no title" if title == 'none' else ' title is ' + title)
-            + '. Is this a yes/no poll?')
+            + '. Is this a yes/no poll?'
+        )
         boolean_poll = await self.prompt_boolean(context, query, check)
 
         query = 'Would you like to add a shrug emoji to the poll too?'

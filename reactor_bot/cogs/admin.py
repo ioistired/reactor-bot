@@ -11,7 +11,8 @@ class Admin:
         self.bot = bot
         self.success_emoji = (
             '\N{cross mark}',
-            '\N{white heavy check mark}',)
+            '\N{white heavy check mark}',
+        )
 
     @commands.command()
     @commands.is_owner()
@@ -27,7 +28,8 @@ class Admin:
         except Exception as e:
             await context.message.add_reaction(self.success_emoji[False])
             await context.send(
-                '**ERROR**: {} - {}'.format(type(e).__name__, e))
+                '**ERROR**: {} - {}'.format(type(e).__name__, e)
+            )
         else:
             await context.message.add_reaction(self.success_emoji[True])
 
