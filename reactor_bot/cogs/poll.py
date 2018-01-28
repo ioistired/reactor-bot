@@ -80,6 +80,7 @@ class Poll:
 			'no',
 			'n',
 			'false',
+			'nope',
 			'\N{cross mark}',
 			'\N{regional indicator symbol letter x}',
 			'\N{heavy multiplication x}',
