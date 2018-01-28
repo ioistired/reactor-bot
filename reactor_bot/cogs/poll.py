@@ -58,7 +58,8 @@ class Poll:
 
     async def prompt(self, context, question, check):
         await context.send(question)
-        return (await self.bot.wait_for('message', check=check)).content.strip()
+        message = await self.bot.wait_for('message', check=check)
+        return message.content.strip()
 
     async def prompt_boolean(self, context, question, check):
         yesses = [
@@ -88,7 +89,7 @@ class Poll:
             '\N{no entry}',
             '\N{no entry sign}',
             '<:xmark:314349398824058880>',
-            '<:No:359195592951332874>',]
+            '<:No:359195592951332874>']
 
         await context.send(question)
 
@@ -123,8 +124,8 @@ class Poll:
 
         query = (
             'Cool, so the'
-            + ("re's no title" if title == 'none' else ' title is ' + title) + '. '
-            + 'Is this a yes/no poll?')
+            + ("re's no title" if title == 'none' else ' title is ' + title)
+            + '. Is this a yes/no poll?')
         boolean_poll = await self.prompt_boolean(context, query, check)
 
         query = 'Would you like to add a shrug emoji to the poll too?'

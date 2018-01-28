@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 
+import time
+
 from discord.ext.commands import command
+
 
 class Misc:
     """Miscellaneous commands that don't belong in any other category"""

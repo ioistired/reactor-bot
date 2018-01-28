@@ -10,12 +10,13 @@ import random
 # I could use None here but I wanted a descriptive name
 END_OF_POLL_EMOJI = object()
 
+
 def get_poll_emoji(message, shrug=True):
     """generate the proper emoji to react to any poll message"""
     # first line is poll title / command line (ignored)
     # only get the first 19 lines, otherwise there'd be no room for 🤷
     # but if the user doesn't want shrug, get the first 20
-    message = message.split('\n')[1:21 - shrug] # tbh this is a hack
+    message = message.split('\n')[1:21 - shrug]  # tbh this is a hack
     if len(message) > 0:
         for line in message:
             if line:
@@ -102,6 +103,7 @@ def get_easter_egg_emoji():
         # so if there's more than one shrug emoji, pick one
         # else, use the only one available
         return random.choice(shrug_emoji)
+
 
 def _date():
     today = date.today()
