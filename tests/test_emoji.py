@@ -18,8 +18,7 @@ class TestEmojiUtils:
 		cls.easter_egg_emoji = {
 			cls.april_fools: {'🦑', '\N{octopus}'},
 			cls.five_nine: {':fsociety:376935242029727745'},
-			cls.halloween: {'\N{jack-o-lantern}', '\N{ghost}'},
-		}
+			cls.halloween: {'\N{jack-o-lantern}', '\N{ghost}'}}
 
 
 	def test_get_poll_emoji(self):
@@ -34,8 +33,7 @@ class TestEmojiUtils:
 			'foo\n'
 			'bar': ('🇲', '🐕', '3⃣', '🇺🇸', 'foo', 'bar'),
 
-			'poll: Haskell lang best lang?': ('👍', '👎'),
-		}
+			'poll: Haskell lang best lang?': ('👍', '👎')}
 
 		for date, easter_egg_emoji in self.easter_egg_emoji.items():
 			with freeze_time(date):
@@ -54,8 +52,7 @@ class TestEmojiUtils:
 			'3 blind mice': '3',
 			'🇺🇸 flags': '🇺🇸',
 			'<:python3:232720527448342530> python3!':
-				'<:python3:232720527448342530>',
-		}
+				'<:python3:232720527448342530>'}
 
 		for input, output in lines_and_emojis.items():
 			assert emoji.extract_emoji(input) == output
@@ -70,8 +67,7 @@ class TestEmojiUtils:
 			'123': '123⃣',
 			'0': '0⃣',
 			'6': '6⃣',
-			'asdfghjkl;': 'asdfghjkl;',
-		}
+			'asdfghjkl;': 'asdfghjkl;'}
 
 		for input, output in io_map.items():
 			assert emoji.parse_emoji(input) == output
@@ -104,8 +100,7 @@ class TestEmojiUtils:
 			'W': '🇼',
 			'X': '🇽',
 			'Y': '🇾',
-			'Z': '🇿'
-		}
+			'Z': '🇿'}
 
 		# one of these tests will fail on april fools
 		# (hint: it's "B")
@@ -129,8 +124,7 @@ class TestEmojiUtils:
 			'6': '6⃣',
 			'7': '7⃣',
 			'8': '8⃣',
-			'9': '9⃣',
-		}
+			'9': '9⃣'}
 
 		for input, output in io_map.items():
 			assert emoji.get_digit_emoji(input) == output
