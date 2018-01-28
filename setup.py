@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# encoding: utf-8
+
 import setuptools
 
 
@@ -31,6 +34,7 @@ setuptools.setup(
             'pytest-cov',
             'freezegun',
         ],
+    },
 
     entry_points={
         'console_scripts': 'reactor-bot = reactor_bot.__main__:main'

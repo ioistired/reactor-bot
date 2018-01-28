@@ -6,6 +6,7 @@ from datetime import date
 
 from freezegun import freeze_time
 
+
 class TestEmojiUtils:
 
     @classmethod
@@ -20,7 +21,6 @@ class TestEmojiUtils:
             cls.five_nine: {':fsociety:376935242029727745'},
             cls.halloween: {'\N{jack-o-lantern}', '\N{ghost}'},
         }
-
 
     def test_get_poll_emoji(self):
         # TODO more test cases
@@ -48,7 +48,6 @@ class TestEmojiUtils:
                     )
                     assert poll_emoji[-1] in easter_egg_emoji
 
-
     def test_extract_emoji(self):
         lines_and_emojis = {
             ' M)-ystery meat': 'M',
@@ -60,7 +59,6 @@ class TestEmojiUtils:
 
         for input, output in lines_and_emojis.items():
             assert emoji.extract_emoji(input) == output
-
 
     def test_parse_emoji(self):
         io_map = {
@@ -75,7 +73,6 @@ class TestEmojiUtils:
 
         for input, output in io_map.items():
             assert emoji.parse_emoji(input) == output
-
 
     def test_get_letter_emoji(self):
         io_map = {
@@ -135,15 +132,12 @@ class TestEmojiUtils:
         for input, output in io_map.items():
             assert emoji.get_digit_emoji(input) == output
 
-
     def test_easter_egg_emoji(self):
-
         for date, easter_egg_emoji in self.easter_egg_emoji.items():
             with freeze_time(date):
-                # get the shrug emoji 100 times on halloween
+                # get the shrug emoji 100 times
                 # there is a 1/2**100 chance that this test will fail
                 responses = {emoji.get_easter_egg_emoji() for _ in range(100)}
-                print(date, 'expected', *easter_egg_emoji, 'got', *responses)
-                assert len(responses) == len(easter_egg_emoji) # 2 unique emoji
+                assert len(responses) == len(easter_egg_emoji)
                 # the only two responses we get should be these two
                 assert len(easter_egg_emoji ^ responses) == 0
