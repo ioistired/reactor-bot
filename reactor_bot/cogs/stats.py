@@ -7,7 +7,7 @@ import aiohttp
 
 class StatsAPI:
 	"""Various Stats APIs for bot lists
-	credit to "ﾠﾠﾠﾠ#7887" on the Discord Bots List guild
+	credit to "ﾠﾠﾠﾠTom™#7887" (ID 248294452307689473) on the Discord Bots List guild
 	for much of this
 	"""
 
