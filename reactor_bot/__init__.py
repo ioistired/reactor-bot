@@ -24,6 +24,7 @@ async def on_ready():
 	separator = '━' * len(message)
 	print(separator, message, separator, sep='\n')
 	await bot.change_presence(game=discord.Game(name='poll:help'))
+	bot.client_id = (await bot.application_info()).id
 
 
 # since discord.py doesn't allow for commands with no name,

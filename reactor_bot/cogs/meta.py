@@ -72,7 +72,7 @@ class Meta:
 		permissions.update(**dict.fromkeys(permission_names, True))
 
 		await context.send(
-			'<%s>' % discord.utils.oauth_url(self.bot.client_id, perms))
+			'<%s>' % discord.utils.oauth_url(self.bot.client_id, permissions))
 
 
 def setup(bot):
