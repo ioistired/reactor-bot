@@ -1,9 +1,9 @@
 Reactor™
 ========
 
-.. image:: https://img.shields.io/pypi/v/poll_bot.svg
-	:target: https://pypi.python.org/pypi/poll_bot
-	:alt: Latest PyPI version
+.. image:: https://discordbots.org/api/widget/status/323505480766849026.svg?noavatar=true
+	:target: https://discordbots.org/bot/323505480766849026
+	:alt: Discord Bots List
 
 The best dang Discord poll bot around™
 
