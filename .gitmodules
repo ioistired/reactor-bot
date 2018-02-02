@@ -1,0 +1,3 @@
+[submodule "reactor_bot/cogs/external"]
+	path = reactor_bot/cogs/external
+	url = git@github.com:bmintz/cogs.git
