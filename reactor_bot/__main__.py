@@ -3,32 +3,35 @@
 
 from . import bot
 
-from configparser import ConfigParser
 from appdirs import AppDirs
 import os.path
-
+import json
 import sys
 
 
 def main():
-
 	dirs = AppDirs('reactor-bot', 'bmintz')
-	config = ConfigParser()
-	config.read(os.path.join(dirs.user_config_dir, 'reactor-bot.ini'))
+	bot.cogs_path = 'reactor_bot.cogs'
 
+	with open(os.path.join(dirs.user_config_dir, 'config.json')) as config_file:
+		config = json.load(config_file)
 	bot.config = config
 
 	# place the extensions in order of priority
-	for extension in ('poll', 'misc', 'admin', 'stats'):
-		print('Loading extension', extension)
+	for extension in ('poll', 'meta', 'external.admin', 'external.stats', 'external.misc'):
+		print('Loading extension', extension, file=sys.stderr)
 		try:
-			bot.load_extension('reactor_bot.cogs.' + extension)
+			bot.load_extension(bot.cogs_path + '.' + extension)
 		except Exception as e:
-			exc = '{}: {}'.format(type(e).__name__, e)
-			print('Failed to load extension {}\n{}'.format(extension, exc))
+			exc = '%s: %s' % (type(e).__name__, e)
+			print('Failed to load extension %s\n%s' % (extension, exc), file=sys.stderr)
 
-	bot.run(config['discord']['api_token'])
-	return 0
+	try:
+		bot.run(config['tokens']['discord'])
+	except:
+		return 1
+	else:
+		return 0
 
 
 sys.exit(main())
