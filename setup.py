@@ -3,7 +3,7 @@ import setuptools
 
 setuptools.setup(
 	name='reactor_bot',
-	version='4.5.8',
+	version='4.5.9',
 	url='https://github.com/bmintz/reactor-bot',
 
 	author='Benjamin Mintz',
