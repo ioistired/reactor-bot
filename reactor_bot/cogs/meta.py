@@ -61,13 +61,12 @@ class Meta:
 		Thanks! 😊
 		"""
 		permission_names = (
-			'manage_messages', # needed to remove reactions on message edit
-			'send_messages', # needed for help message
-			# in case the user supplies an external emoji in a poll
-			'external_emojis',
-			'read_messages', # needed to act on commands
-			'add_reactions', # needed to add poll options
-			'embed_links') # needed to send the help message
+			'read_messages',  # needed to act on commands
+			'send_messages',  # needed to send error messages
+			'manage_messages',  # needed to remove reactions on message edit
+			'external_emojis',  # in case the user supplies an external emoji in a poll
+			'add_reactions',  # needed to add poll options
+			'embed_links')  # needed to send the help message
 		permissions = discord.Permissions()
 		permissions.update(**dict.fromkeys(permission_names, True))
 
