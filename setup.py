@@ -15,8 +15,7 @@ setuptools.setup(
 	packages=setuptools.find_packages(),
 
 	install_requires=[
-		#'discord.py',
-		'appdirs',
+		'humanize',
 		'inflect'],
 
 	extras_require={
