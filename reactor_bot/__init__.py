@@ -33,7 +33,9 @@ async def on_ready():
 # (poll: foo) we have to process them manually in that case
 @bot.event
 async def on_message(message):
-	if message.author.bot or not message.content:
+	if not bot.dev_mode and message.author.bot:
+		return
+	if not message.content:
 		return
 
 	context = await bot.get_context(message)

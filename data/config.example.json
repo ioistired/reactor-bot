@@ -1,4 +1,5 @@
 {
+	"release": "development",
 	"description": "A bot that lets you easily create reaction polls using any emoji or yes/no/shrug",
 
 	"tokens": {
