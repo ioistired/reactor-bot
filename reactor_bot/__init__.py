@@ -6,6 +6,7 @@
 __version__ = '4.5.9'
 __author__ = 'Benjamin Mintz <bmintz@protonmail.com>'
 
+import logging
 import sys
 
 import discord
@@ -14,6 +15,7 @@ from discord.ext import commands
 from reactor_bot import emoji_utils as emoji
 from reactor_bot.cogs.poll import Poll
 
+logging.basicConfig(level=logging.INFO)
 prefixes = [capitalization + ':' for capitalization in ('Poll', 'poll', 'POLL')]
 bot = commands.Bot(command_prefix=commands.when_mentioned_or(*prefixes))
 

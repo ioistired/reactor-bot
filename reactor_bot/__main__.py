@@ -1,27 +1,29 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 
-from . import bot
-
-from appdirs import AppDirs
-import os.path
 import json
+import logging
+import os.path
 import sys
+
+from . import bot
 
 
 def main():
-	dirs = AppDirs('reactor-bot', 'bmintz')
-	bot.cogs_path = 'reactor_bot.cogs'
-
-	with open(os.path.join(dirs.user_config_dir, 'config.json')) as config_file:
-		config = json.load(config_file)
-	bot.config = config
+	with open('data/config.json') as config_file:
+		bot.config = json.load(config_file)
 
 	# place the extensions in order of priority
-	for extension in ('poll', 'meta', 'external.admin', 'external.stats', 'external.misc'):
+	for extension in (
+			'reactor_bot.cogs.poll',
+			'reactor_bot.cogs.meta',
+			'jishaku',
+			'reactor_bot.cogs.external.admin',
+			'reactor_bot.cogs.external.stats',
+			'reactor_bot.cogs.external.misc'):
 		print('Loading extension', extension, file=sys.stderr)
 		try:
-			bot.load_extension(bot.cogs_path + '.' + extension)
+			bot.load_extension(extension)
 		except Exception as e:
 			exc = '%s: %s' % (type(e).__name__, e)
 			print('Failed to load extension %s\n%s' % (extension, exc), file=sys.stderr)

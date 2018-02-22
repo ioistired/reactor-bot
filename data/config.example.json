@@ -1,0 +1,9 @@
+{
+	"description": "A bot that lets you easily create reaction polls using any emoji or yes/no/shrug",
+
+	"tokens": {
+		"discord": "se.krit.token",
+
+		"stats": {
+			"bots.discord.pw": null,
+			"discordbots.org": null}}}
