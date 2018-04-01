@@ -25,7 +25,7 @@ async def on_ready():
 	message = 'Logged in as: %s' % bot.user
 	separator = '━' * len(message)
 	print(separator, message, separator, sep='\n')
-	await bot.change_presence(game=discord.Game(name='poll:help'))
+	await bot.change_presence(activity=discord.Game(name='poll:help'))
 	bot.client_id = (await bot.application_info()).id
 
 
