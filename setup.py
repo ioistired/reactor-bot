@@ -27,7 +27,7 @@ setuptools.setup(
 			'tox',
 			'pytest',
 			'pytest-cov',
-			'freezegun'],
+			'freezegun']},
 
 	entry_points={
 		'console_scripts': 'reactor-bot = reactor_bot.__main__:main'},
