@@ -19,9 +19,9 @@ def main():
 			'reactor_bot.cogs.poll',
 			'reactor_bot.cogs.meta',
 			'jishaku',
-			'reactor_bot.cogs.external.admin',
-			'reactor_bot.cogs.external.stats',
-			'reactor_bot.cogs.external.misc'):
+			'ben_cogs.admin',
+			'ben_cogs.stats',
+			'ben_cogs.misc'):
 		print('Loading extension', extension, file=sys.stderr)
 		try:
 			bot.load_extension(extension)
