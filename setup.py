@@ -17,7 +17,8 @@ setuptools.setup(
 	install_requires=[
 		'ben_cogs',
 		'humanize',
-		'inflect'],
+		'inflect',
+		'jishaku'],
 
 	extras_require={
 		'dev': [
