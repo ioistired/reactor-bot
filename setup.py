@@ -16,7 +16,7 @@ setuptools.setup(
 
 	install_requires=[
 		'ben_cogs',
-		'humanize',
+		'discord.py>=1.0.0a1430',
 		'inflect',
 		'jishaku'],
 
