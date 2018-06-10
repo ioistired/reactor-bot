@@ -8,7 +8,7 @@ from discord.ext import commands
 import inflect
 
 from reactor_bot import emoji_utils as emoji
-
+from reactor_bot import should_reply
 
 class Poll:
 	"""These commands are probably what you added the bot for."""
@@ -25,6 +25,21 @@ class Poll:
 	def __init__(self, bot):
 		self.bot = bot
 
+	async def on_message(self, message):
+		if not should_reply(self.bot, message):
+			return
+
+		context = await self.bot.get_context(message)
+
+		# e.g. poll: go out for lunch?
+		# or poll:foo (assuming foo is not a command)
+		if context.prefix and not context.command:
+			await self.reaction_poll(message)
+
+	async def __error(self, context, error):
+		if isinstance(error, commands.errors.CommandNotFound):
+			return
+
 	@classmethod
 	async def reaction_poll(cls, message):
 		content = message.content
@@ -37,31 +52,45 @@ class Poll:
 			if reaction in seen_reactions:
 				continue
 			elif reaction is emoji.END_OF_POLL_EMOJI:
+				# after END_OF_POLL_EMOJI comes the shrug and easter egg emojis,
+				# which should *not* be added if the user did not provide a valid poll.
+				# example of an invalid poll:
+				#
+				# poll: foo
+				# )
+				# asdf
+				# 123:
 				if not reactions_added:
 					return
 				# don't react with emoji.END_OF_POLL_EMOJI!
 				continue
 			if await cls.react_safe(message, reaction):
 				reactions_added = True
+
 			seen_reactions.add(reaction)
 
 	@staticmethod
 	async def react_safe(message, reaction):
 		try:
 			await message.add_reaction(reaction)
-			return True
 		except discord.errors.HTTPException:
 			# since we're trying to react with arbitrary emoji,
 			# some of them are going to be bunk
 			# but that shouldn't stop the whole poll
 			return False
+		else:
+			return True
 
 	async def prompt(self, context, question, check):
 		await context.send(question)
-		return (await self.bot.wait_for('message', check=check)).content.strip()
+		return await self.get_response(check)
+
+	async def get_response(self, check):
+		response = await self.bot.wait_for('message', check=check)
+		return response.content.strip().lower()
 
 	async def prompt_boolean(self, context, question, check):
-		yesses = [
+		yesses = {
 			'yes',
 			'y',
 			'sure',
@@ -75,8 +104,8 @@ class Poll:
 			'\N{white heavy check mark}',
 			'\N{ballot box with check}',
 			'<:check:314349398811475968>',
-			'<:Yes:359195592758394881>']
-		nos = [
+			'<:Yes:359195592758394881>'}
+		nos = {
 			'no',
 			'n',
 			'false',
@@ -88,13 +117,12 @@ class Poll:
 			'\N{no entry}',
 			'\N{no entry sign}',
 			'<:xmark:314349398824058880>',
-			'<:No:359195592951332874>',]
+			'<:No:359195592951332874>'}
 
 		await context.send(question)
 
 		while True:
-			response = await self.bot.wait_for('message', check=check)
-			response = response.content.lower().strip()
+			response = await self.get_response(check)
 			if response in yesses:
 				return True
 			elif response in nos:

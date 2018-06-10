@@ -1,36 +1,25 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 
-import json
 import logging
-import os.path
-import sys
 
-from . import bot
+from reactor_bot import bot
 
+# place the extensions in order of priority
+for extension in (
+		'reactor_bot.cogs.poll',
+		'reactor_bot.cogs.meta',
+		'jishaku',
+		'ben_cogs.admin',
+		'ben_cogs.stats',
+		'ben_cogs.misc'):
+	logging.info('Loading extension %s', extension)
+	try:
+		bot.load_extension(extension)
+	except Exception as e:
+		exc = '%s: %s' % (type(e).__name__, e)
+		logging.error('Failed to load extension %s', extension)
+		logging.error(exc)
+		continue
 
-def main():
-	with open('data/config.json') as config_file:
-		bot.config = json.load(config_file)
-	bot.dev_mode = bot.config['release'] == 'development'
-
-	# place the extensions in order of priority
-	for extension in (
-			'reactor_bot.cogs.poll',
-			'reactor_bot.cogs.meta',
-			'jishaku',
-			'ben_cogs.admin',
-			'ben_cogs.stats',
-			'ben_cogs.misc'):
-		print('Loading extension', extension, file=sys.stderr)
-		try:
-			bot.load_extension(extension)
-		except Exception as e:
-			exc = '%s: %s' % (type(e).__name__, e)
-			print('Failed to load extension %s\n%s' % (extension, exc), file=sys.stderr)
-
-	bot.run(bot.config['tokens']['discord'])
-	return 0
-
-
-sys.exit(main())
+bot.run(bot.config['tokens']['discord'])
