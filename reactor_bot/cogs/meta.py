@@ -18,40 +18,42 @@ class Meta:
 	@command()
 	async def help(self, context):
 		"""This message yer lookin' at right here, pardner."""
-		embed = discord.Embed(
-			title='Help for Reactor',
-			timestamp=datetime.utcfromtimestamp(1515291012))
+		embed = discord.Embed(title='Help for Reactor')
+
+		embed.set_footer(text='Last updated')
+		embed.timestamp = datetime.utcfromtimestamp(1528706651)
 
 		embed.add_field(
 			name='Poll',
 			value='Usage: `poll: <your message here>`\n'
-				+ '👍, 👎, and 🤷 will be added as reactions to your message, '
-				+ 'unless "noshrug" is found in the message.')
+				'👍, 👎, and 🤷 will be added as reactions to your message, '
+				'unless "noshrug" is found in the message.')
 		embed.add_field(
 			name='Multi poll',
 			value='Usage: ```poll: [poll title]\n'
-				+ '<emoji> [option 1]\n'
-				+ '<emoji> [option 2]\n<emoji> [option 3]...```\n'
-				+ '`<emoji>` can be a custom emote, a number, or a letter.'
-				+ '\nAll the emoji you specified will be added to the message,'
-				+ 'as well as :shrug:. '
-				+ 'However, if you add "noshrug" or "⛔shrug" or similar, '
-				+ 'anywhere in the message, :shrug: will *not* be sent.')
+				'<emoji> [option 1]\n'
+				'<emoji> [option 2]\n<emoji> [option 3]...```\n'
+				'`<emoji>` can be a custom emote, a number, or a letter.'
+				'\nAll the emoji you specified will be added to the message,'
+				'as well as :shrug:. '
+				'However, if you add "noshrug" or "⛔shrug" or similar, '
+				'anywhere in the message, :shrug: will *not* be sent.')
 		embed.add_field(
 			name='Poll maker',
 			value='Usage: `poll:make`\n'
-				+ 'The bot will ask you everything it needs to know '
-				+ 'about the poll, and then send it for you.\n'
-				+ "Useful if you're not sure how to use the bot yet.")
+				'The bot will ask you everything it needs to know '
+				'about the poll, and then send it for you.\n'
+				"Useful if you're not sure how to use the bot yet.")
+		embed.add_field(
+			name='Prefixless mode',
+			value='Usage: `poll:prefixless #channel yes/no`\n'
+				'If you have the "Manage Roles" permission, you can make it so that '
+				'every message in a certain channel will be treated as a poll.')
 		embed.add_field(
 			name='invite',
 			value='Usage: `poll:invite`\n'
-				+ 'Sends you an invite link '
-				+ 'so you can add the bot to your own server')
-		embed.add_field(
-			name='ping',
-			value='Usage: `poll:ping`\n'
-				+ "Shows the bots latency to Discord's servers")
+				'Sends you an invite link '
+				'so you can add the bot to your own server')
 
 		await context.send(embed=embed)
 
