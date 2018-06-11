@@ -15,6 +15,7 @@ setuptools.setup(
 	packages=setuptools.find_packages(),
 
 	install_requires=[
+		'asyncpg',
 		'ben_cogs',
 		'discord.py>=1.0.0a1430',
 		'inflect',
