@@ -24,6 +24,7 @@ class Poll:
 
 	def __init__(self, bot):
 		self.bot = bot
+		self.db = self.bot.get_cog('Database')
 
 	async def on_message(self, message):
 		if not should_reply(self.bot, message):
@@ -33,16 +34,37 @@ class Poll:
 
 		# e.g. poll: go out for lunch?
 		# or poll:foo (assuming foo is not a command)
-		if context.prefix and not context.command:
-			await self.reaction_poll(message)
+		if (
+			context.prefix and not context.command
+			or not context.prefix and await self.db.is_prefixless_channel(message.channel.id)
+		):
+			await self.reaction_poll(context)
 
 	async def __error(self, context, error):
 		if isinstance(error, commands.errors.CommandNotFound):
 			return
 
+	@commands.command()
+	@commands.has_permissions(manage_roles=True)
+	async def prefixless(self, context, channel: discord.TextChannel, prefixless: bool):
+		"""Sets a channel up to be "prefix less".
+		All messages sent in that channel will be treated as a poll.
+		You must have the "Manage Roles" permission to use this command.
+		"""
+
+		func = self.db.set_prefixless_channel if prefixless else self.db.unset_prefixless_channel
+		await func(channel.id)
+		await context.add_reaction('\N{white heavy check mark}')
+
 	@classmethod
-	async def reaction_poll(cls, message):
+	async def reaction_poll(cls, context):
+		message = context.message
 		content = message.content
+		if not context.prefix and len(content.splitlines()) > 1:
+			# emoji.get_poll_emoji normally ignores the first line of a multi line poll.
+			# in this case it shouldn't
+			# XXX hacky way to do this
+			content = '\n' + content
 
 		shrug = not any(keyword in content for keyword in cls.NOSHRUG_KEYWORDS)
 
