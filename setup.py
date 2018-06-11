@@ -20,6 +20,8 @@ setuptools.setup(
 		'inflect',
 		'jishaku'],
 
+	python_requires='>=3.6',
+
 	extras_require={
 		'dev': [
 			'bumpversion'],
@@ -36,5 +38,5 @@ setuptools.setup(
 	classifiers=[
 		'Development Status :: 4 - Beta',
 		'Programming Language :: Python',
-		'Programming Language :: Python :: 3.5',
+		'Programming Language :: Python :: 3.6',
 		'License :: OSI Approved :: MIT License'])
