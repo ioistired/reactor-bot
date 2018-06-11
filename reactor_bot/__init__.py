@@ -13,8 +13,8 @@ import traceback
 import discord
 from discord.ext import commands
 
-
 logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger('bot')
 prefixes = (capitalization + ':' for capitalization in ('Poll', 'poll', 'POLL'))
 bot = commands.Bot(
 	command_prefix=commands.when_mentioned_or(*prefixes),
