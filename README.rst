@@ -38,11 +38,24 @@ You can also use right-parens and other emoji ::
 Installation
 ------------
 
-Requirements
-^^^^^^^^^^^^
+Run this in :code:`psql`::
+
+	CREATE USER reactor;
+	\password reactor
+	CREATE SCHEMA reactor;
+	GRANT ALL PRIVILEGES ON SCHEMA reactor TO reactor;
+	CREATE DATABASE reactor OWNER reactor;
+
+And then copy data/config.example.json to data/config.json and fill out the appropriate values
+in the database section and all the other sections.
+
+Now just :code:`pip install . -r requirements.txt`, preferably inside a venv.
+And finally, to run the bot, you do :code:`python -m reactor_bot`.
 
 Compatibility
 -------------
+
+Python3.6+
 
 License
 -------
