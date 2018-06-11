@@ -1,3 +1,3 @@
-CREATE TABLE IF NOT EXISTS reactor.prefixless_channels (
+CREATE TABLE IF NOT EXISTS prefixless_channels (
 	channel BIGINT PRIMARY KEY NOT NULL
 );
