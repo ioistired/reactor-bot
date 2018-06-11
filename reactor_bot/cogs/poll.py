@@ -203,10 +203,10 @@ class Poll:
 			options.append(next_option)
 
 		await self.reaction_poll(
-			await context.send(message + await self.poll_options(options)))
+			await context.send(message + self.poll_options(options)))
 
 	@staticmethod
-	async def poll_options(options):
+	def poll_options(options):
 		poll_options = []
 		for i, option in enumerate(options):
 			poll_options.append('{} {}'.format(ascii_uppercase[i], option))
