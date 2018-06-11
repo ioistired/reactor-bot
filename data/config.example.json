@@ -2,6 +2,12 @@
 	"release": "development",
 	"description": "A bot that lets you easily create reaction polls using any emoji or yes/no/shrug",
 
+	"database": {
+		"user": "reactor",
+		"password": "hunter2",
+		"database": "reactor",
+		"host": "127.0.0.1"},
+
 	"tokens": {
 		"discord": "se.krit.token",
 
