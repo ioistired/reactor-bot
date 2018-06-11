@@ -35,6 +35,15 @@ You can also use right-parens and other emoji ::
 *🤔, \:thonking\: (if your server has it), 🅱️, and 🤷 will be added as reactions*
 
 
+If you have a certain channel for which every message should be a poll,
+you can use the command: poll:prefixless. It works like this:
+
+:code:`poll:prefixless #channel-here yes/no`
+
+If yes (or 1 or true), every message sent in that channel will be treated as a poll.
+You need the "manage roles" permission to change this setting.
+
+
 Installation
 ------------
 
