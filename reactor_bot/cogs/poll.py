@@ -54,7 +54,7 @@ class Poll:
 
 		func = self.db.set_prefixless_channel if prefixless else self.db.unset_prefixless_channel
 		await func(channel.id)
-		await context.add_reaction('\N{white heavy check mark}')
+		await context.message.add_reaction('\N{white heavy check mark}')
 
 	@classmethod
 	async def reaction_poll(cls, context):
