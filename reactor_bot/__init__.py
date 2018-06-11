@@ -16,7 +16,10 @@ from discord.ext import commands
 
 logging.basicConfig(level=logging.INFO)
 prefixes = (capitalization + ':' for capitalization in ('Poll', 'poll', 'POLL'))
-bot = commands.Bot(command_prefix=commands.when_mentioned_or(*prefixes))
+bot = commands.Bot(
+	command_prefix=commands.when_mentioned_or(*prefixes),
+	activity=discord.Game(name='poll:help'),
+)
 
 
 with open('data/config.json') as config_file:
@@ -30,7 +33,6 @@ async def on_ready():
 	message = 'Logged in as: %s' % bot.user
 	separator = '━' * len(message)
 	print(separator, message, separator, sep='\n')
-	await bot.change_presence(activity=discord.Game(name='poll:help'))
 	bot.client_id = (await bot.application_info()).id
 
 
