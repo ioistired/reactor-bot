@@ -50,6 +50,8 @@ def _format_exception(exception):
 	return ''.join(traceback.format_exception(type(exception), exception, exception.__traceback__))
 
 def should_reply(bot, message):
+	if message.author == bot.user:
+		return False
 	if not bot.dev_mode and message.author.bot:
 		return False
 	if not message.content:
