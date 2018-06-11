@@ -36,18 +36,34 @@ async def on_ready():
 	bot.client_id = (await bot.application_info()).id
 
 
+# based on this code:
+# https://github.com/Rapptz/RoboDanny/blob/ca75fae7de132e55270e53d89bc19dd2958c2ae0/bot.py#L77-L85
+# received from Rapptz, used under the MIT License.
 @bot.event
-async def on_command_error(context, exception):
-	if isinstance(exception, commands.errors.CommandNotFound):
+async def on_command_error(context, error):
+	if isinstance(error, commands.CommandNotFound):
 		# prevent poll messages like "poll:foo" from logging "foo"
 		# because "foo" is sensitive end user data
 		return
+	if isinstance(error, commands.NoPrivateMessage):
+		await context.author.send('This command cannot be used in private messages.')
+	elif isinstance(error, commands.DisabledCommand):
+		message = 'Sorry. This command is disabled and cannot be used.'
+		try:
+			await context.author.send(message)
+		except discord.Forbidden:
+			await context.send(message)
+	elif isinstance(error, commands.UserInputError):
+		await context.send(error)
+	elif isinstance(error, commands.NotOwner):
+		logger.error('%s tried to run %s but is not the owner', context.author, context.command.name)
+	elif isinstance(error, commands.CommandInvokeError):
+		await context.send('An internal error occured while trying to run that command.')
+		logger.error('Error in command %s:', context.command.qualified_name)
+		logger.error(''.join(traceback.format_tb(error.original.__traceback__)))
+		# pylint: disable=logging-format-interpolation
+		logger.error('{0.__class__.__name__}: {0}'.format(error.original))
 
-	logging.error('Ignoring exception in command {}:'.format(context.command))
-	logging.error(_format_exception(exception))
-
-def _format_exception(exception):
-	return ''.join(traceback.format_exception(type(exception), exception, exception.__traceback__))
 
 def should_reply(bot, message):
 	if message.author == bot.user:
