@@ -38,15 +38,14 @@ class Poll:
 			context.prefix and not context.command
 			or not context.prefix and await self.db.is_prefixless_channel(message.channel.id)
 		):
-			await self.reaction_poll(context)
+			await self.reaction_poll(message)
 
 	async def __error(self, context, error):
 		if isinstance(error, commands.errors.CommandNotFound):
 			return
 
 	@classmethod
-	async def reaction_poll(cls, context):
-		message = context.message
+	async def reaction_poll(cls, message):
 		content = message.content
 		if not context.prefix and len(content.splitlines()) > 1:
 			# emoji.get_poll_emoji normally ignores the first line of a multi line poll.
