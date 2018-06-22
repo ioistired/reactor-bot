@@ -22,7 +22,7 @@ class Database:
 		self._init_task.cancel()
 
 		try:
-			self.pool.close()
+			self.bot.loop.create_task(self.pool.close())
 		except AttributeError:
 			pass
 
