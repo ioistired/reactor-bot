@@ -44,18 +44,6 @@ class Poll:
 		if isinstance(error, commands.errors.CommandNotFound):
 			return
 
-	@commands.command()
-	@commands.has_permissions(manage_roles=True)
-	async def prefixless(self, context, channel: discord.TextChannel, prefixless: bool):
-		"""Sets a channel up to be "prefix less".
-		All messages sent in that channel will be treated as a poll.
-		You must have the "Manage Roles" permission to use this command.
-		"""
-
-		func = self.db.set_prefixless_channel if prefixless else self.db.unset_prefixless_channel
-		await func(channel.id)
-		await context.message.add_reaction('\N{white heavy check mark}')
-
 	@classmethod
 	async def reaction_poll(cls, context):
 		message = context.message
