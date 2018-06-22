@@ -47,11 +47,6 @@ class Poll:
 	@classmethod
 	async def reaction_poll(cls, message):
 		content = message.content
-		if not context.prefix and len(content.splitlines()) > 1:
-			# emoji.get_poll_emoji normally ignores the first line of a multi line poll.
-			# in this case it shouldn't
-			# XXX hacky way to do this
-			content = '\n' + content
 
 		shrug = not any(keyword in content for keyword in cls.NOSHRUG_KEYWORDS)
 
