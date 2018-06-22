@@ -29,7 +29,7 @@ class Database:
 	async def _init(self):
 		credentials = self.bot.config['database']
 		# god bless kwargs
-		self.pool = await asyncpg.connect(**credentials)
+		self.pool = await asyncpg.create_pool(**credentials)
 
 		async with aiofiles.open('data/schema.sql') as f:
 			schema = await f.read()
