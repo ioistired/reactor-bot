@@ -66,7 +66,8 @@ class Database:
 		- all three arguments must be emojis. if they are not, the poll command will silently fail.
 		- you must have the Manage Emojis permission to use this
 		"""
-
+		# custom emojis must be sent without surrounding < and > for reactions
+		yes, no, shrug = (x.strip('<>') for x in (yes, no, shrug))
 		await self.set_poll_emoji(channel.id, yes, no, shrug)
 		await context.send(
 			'\N{white heavy check mark} Done. '
