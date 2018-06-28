@@ -40,19 +40,15 @@ class Poll:
 		):
 			await self.reaction_poll(message)
 
-	async def __error(self, context, error):
-		if isinstance(error, commands.errors.CommandNotFound):
-			return
-
-	@classmethod
-	async def reaction_poll(cls, message):
+	async def reaction_poll(self, message):
 		content = message.content
 
-		shrug = not any(keyword in content for keyword in cls.NOSHRUG_KEYWORDS)
+		shrug = not any(keyword in content for keyword in self.NOSHRUG_KEYWORDS)
+		emoji_set = await self.db.get_poll_emoji(message.channel.id)
 
 		seen_reactions = set()
 		reactions_added = False
-		for reaction in emoji.get_poll_emoji(content, shrug=shrug):
+		for reaction in emoji.get_poll_emoji(content, shrug=shrug, emoji_set=emoji_set):
 			if reaction in seen_reactions:
 				continue
 			elif reaction is emoji.END_OF_POLL_EMOJI:
@@ -64,14 +60,12 @@ class Poll:
 				# )
 				# asdf
 				# 123:
-				if not reactions_added:
+				if not seen_reactions:
 					return
 				# don't react with emoji.END_OF_POLL_EMOJI!
 				continue
-			if await cls.react_safe(message, reaction):
-				reactions_added = True
-
-			seen_reactions.add(reaction)
+			if await self.react_safe(message, reaction):
+				seen_reactions.add(reaction)
 
 	@staticmethod
 	async def react_safe(message, reaction):

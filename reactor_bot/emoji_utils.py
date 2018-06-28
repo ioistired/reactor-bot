@@ -10,8 +10,11 @@ import random
 # I could use None here but I wanted a descriptive name
 END_OF_POLL_EMOJI = object()
 
-def get_poll_emoji(message, *, shrug=True, emoji_set=('👍', '👎', '🤷')):
+def get_poll_emoji(message, *, shrug=True, emoji_set=None):
 	"""generate the proper emoji to react to any poll message"""
+	if emoji_set is None:
+		emoji_set = ('👍', '👎', '🤷')
+
 	# first line is poll title / command line (ignored)
 	# only get the first 19 lines, otherwise there'd be no room for 🤷
 	# but if the user doesn't want shrug, get the first 20

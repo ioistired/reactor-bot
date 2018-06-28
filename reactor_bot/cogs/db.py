@@ -15,6 +15,10 @@ cached = aiocache.cached(ttl=20, serializer=None)
 
 
 class Database:
+	SETTINGS_UPDATED_MESSAGE = (
+		'\N{white heavy check mark} Done. '
+		'Note that it may take up to twenty seconds for your changes to take effect.')
+
 	def __init__(self, bot):
 		self.bot = bot
 		self._init_task = self.bot.loop.create_task(self._init())
@@ -69,9 +73,7 @@ class Database:
 		# custom emojis must be sent without surrounding < and > for reactions
 		yes, no, shrug = (x.strip('<>') for x in (yes, no, shrug))
 		await self.set_poll_emoji(channel.id, yes, no, shrug)
-		await context.send(
-			'\N{white heavy check mark} Done. '
-			'Note that it may take up to twenty seconds for your changes to take effect.')
+		await context.send(self.SETTINGS_UPDATED_MESSAGE)
 
 	async def set_prefixless_channel(self, channel: int):
 		statement = """
@@ -100,9 +102,7 @@ class Database:
 
 		func = self.set_prefixless_channel if prefixless else self.unset_prefixless_channel
 		await func(channel.id)
-		await context.send(
-			'\N{white heavy check mark} Done. '
-			'Note that it may take up to twenty seconds for your changes to take effect.')
+		await context.send(self.SETTINGS_UPDATED_MESSAGE)
 
 
 def setup(bot):
