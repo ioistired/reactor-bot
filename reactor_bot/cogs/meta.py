@@ -21,7 +21,7 @@ class Meta:
 		embed = discord.Embed(title='Help for Reactor')
 
 		embed.set_footer(text='Last updated')
-		embed.timestamp = datetime.utcfromtimestamp(1528706651)
+		embed.timestamp = datetime.utcfromtimestamp(1530229898)
 
 		embed.add_field(
 			name='Poll',
@@ -49,6 +49,11 @@ class Meta:
 			value='Usage: `poll:prefixless #channel yes/no`\n'
 				'If you have the "Manage Roles" permission, you can make it so that '
 				'every message in a certain channel will be treated as a poll.')
+		embed.add_field(
+			name='Custom emoji settings',
+			value='Usage: `poll:set-emoji #channel yes no shrug`\n'
+				'If you have the "Manage Emojis" permission, you can change the three emojis '
+				'that will be added to every poll.')
 		embed.add_field(
 			name='invite',
 			value='Usage: `poll:invite`\n'
