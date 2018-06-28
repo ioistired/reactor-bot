@@ -52,7 +52,7 @@ class Poll:
 
 		seen_reactions = set()
 		reactions_added = False
-		for reaction in emoji.get_poll_emoji(content, shrug):
+		for reaction in emoji.get_poll_emoji(content, shrug=shrug):
 			if reaction in seen_reactions:
 				continue
 			elif reaction is emoji.END_OF_POLL_EMOJI:

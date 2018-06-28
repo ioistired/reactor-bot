@@ -1,3 +1,10 @@
 CREATE TABLE IF NOT EXISTS prefixless_channels (
 	channel BIGINT PRIMARY KEY NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS poll_emoji (
+	channel BIGINT PRIMARY KEY NOT NULL,
+	yes TEXT NOT NULL,
+	no TEXT NOT NULL,
+	shrug TEXT NOT NULL
+);
