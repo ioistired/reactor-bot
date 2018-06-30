@@ -56,11 +56,11 @@ class Database:
 
 	@cached
 	async def get_poll_emoji(self, channel: int):
-		return tuple(await self.pool.fetchrow("""
+		return await self.pool.fetchrow("""
 			SELECT yes, no, shrug
 			FROM poll_emoji
 			WHERE channel = $1
-		""", channel))
+		""", channel)
 
 	@commands.command(name='set-emoji')
 	@commands.has_permissions(manage_emojis=True)
