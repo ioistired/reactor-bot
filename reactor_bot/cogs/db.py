@@ -9,6 +9,7 @@ import asyncpg
 import discord
 from discord.ext import commands
 
+from reactor_bot import emoji_utils
 
 logger = logging.getLogger('cogs.db')
 cached = aiocache.cached(ttl=20, serializer=None)
@@ -43,6 +44,10 @@ class Database:
 		logger.info('Database connection initialized successfully')
 
 	async def set_poll_emoji(self, channel: int, yes, no, shrug):
+		# ok so sometimes the shitty discord client doesn't send us actual emojis, but shortcodes
+		# which we cannot react with…
+		# so we have to convert them from shortcodes to unicode.
+		yes, no, shrug = map(emoji_utils.convert_shortcode, (yes, no, shrug))
 		# mfw no INSERT OR REPLACE in postgres
 		await self.pool.execute("""
 			INSERT INTO poll_emoji (channel, yes, no, shrug)
