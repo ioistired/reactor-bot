@@ -51,9 +51,7 @@ Run this in :code:`psql`::
 
 	CREATE USER reactor;
 	\password reactor
-	CREATE SCHEMA reactor;
-	GRANT ALL PRIVILEGES ON SCHEMA reactor TO reactor;
-	CREATE DATABASE reactor OWNER reactor;
+	CREATE DATABASE reactor WITH OWNER reactor;
 
 And then copy data/config.example.json to data/config.json and fill out the appropriate values
 in the database section and all the other sections.
