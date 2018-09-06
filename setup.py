@@ -8,7 +8,7 @@ with open('requirements.txt') as f:
 
 setuptools.setup(
 	name='reactor_bot',
-	version='4.5.14',
+	version='4.5.15',
 	url='https://github.com/bmintz/reactor-bot',
 
 	author='Benjamin Mintz',
