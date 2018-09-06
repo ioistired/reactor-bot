@@ -8,7 +8,6 @@ from discord.ext import commands
 import inflect
 
 from reactor_bot import emoji_utils as emoji
-from reactor_bot import should_reply
 
 class Poll:
 	"""These commands are probably what you added the bot for."""
@@ -27,7 +26,7 @@ class Poll:
 		self.db = self.bot.get_cog('Database')
 
 	async def on_message(self, message):
-		if not should_reply(self.bot, message):
+		if not self.bot.should_reply(message):
 			return
 
 		context = await self.bot.get_context(message)

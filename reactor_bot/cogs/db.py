@@ -4,7 +4,6 @@
 import logging
 
 import aiocache
-import aiofiles
 import asyncpg
 import discord
 from discord.ext import commands
@@ -37,8 +36,8 @@ class Database:
 		# god bless kwargs
 		self.pool = await asyncpg.create_pool(**credentials)
 
-		async with aiofiles.open('data/schema.sql') as f:
-			schema = await f.read()
+		with open('data/schema.sql') as f:
+			schema = f.read()
 		await self.pool.execute(schema)
 
 		logger.info('Database connection initialized successfully')

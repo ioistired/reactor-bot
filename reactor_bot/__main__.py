@@ -14,9 +14,9 @@ def main():  # put it in a main function so that setuptools can create a launch 
 		'reactor_bot.cogs.poll',
 		'reactor_bot.cogs.meta',
 		'jishaku',
-		'ben_cogs.admin',
 		'ben_cogs.stats',
-		'ben_cogs.misc'
+		'ben_cogs.debug',
+		'ben_cogs.misc',
 	):
 		logging.info('Loading extension %s', extension)
 		try:
