@@ -3,7 +3,9 @@
 
 import logging
 
-from reactor_bot import bot
+from reactor_bot import ReactorBot
+
+bot = ReactorBot()
 
 def main():  # put it in a main function so that setuptools can create a launch script
 	# place the extensions in order of priority

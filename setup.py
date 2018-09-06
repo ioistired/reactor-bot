@@ -1,5 +1,10 @@
+#!/usr/bin/env python3
+# encoding: utf-8
+
 import setuptools
 
+with open('requirements.txt') as f:
+	dependency_links = list(filter(lambda line: not line.startswith('#'), f))
 
 setuptools.setup(
 	name='reactor_bot',
@@ -12,7 +17,9 @@ setuptools.setup(
 	description='The best dang Discord poll bot around™',
 	long_description=open('README.rst').read(),
 
-	packages=setuptools.find_packages(),
+	packages=[
+		'reactor_bot',
+		'reactor_bot.cogs'],
 
 	install_requires=[
 		'aiocache',
@@ -21,6 +28,8 @@ setuptools.setup(
 		'discord.py>=1.0.0a1430',
 		'inflect',
 		'jishaku'],
+
+	dependency_links=dependency_links,
 
 	python_requires='>=3.6',
 
