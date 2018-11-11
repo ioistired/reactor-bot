@@ -22,7 +22,6 @@ setuptools.setup(
 		'reactor_bot.cogs'],
 
 	install_requires=[
-		'aiocache',
 		'asyncpg',
 		'ben_cogs',
 		'discord.py>=1.0.0a1430',
