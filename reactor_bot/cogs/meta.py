@@ -84,7 +84,7 @@ class Meta:
 		await context.send(
 			'<%s>' % discord.utils.oauth_url(self.bot.client_id, permissions))
 
-	@commands.command()
+	@command()
 	async def support(self, context):
 		"""Directs you to the support server."""
 		try:
