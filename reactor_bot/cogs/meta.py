@@ -61,7 +61,7 @@ class Meta:
 				'Sends you an invite link '
 				'so you can add the bot to your own server')
 		embed.add_field(
-			name='support'
+			name='support',
 			value='usage: `poll:support`\n'
 				'Directs you to the support server.')
 
