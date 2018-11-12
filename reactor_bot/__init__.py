@@ -28,6 +28,7 @@ class ReactorBot(commands.Bot):
 		with open('data/config.json') as config_file:
 			self.config = json.load(config_file)
 		self.dev_mode = self.config['release'] == 'development'
+		self.config.setdefault('success_or_failure_emojis', ('❌', '✅'))
 
 	async def on_ready(self):
 		message = 'Logged in as: %s' % self.user

@@ -15,4 +15,6 @@
 
 		"stats": {
 			"bots.discord.pw": null,
-			"discordbots.org": null}}}
+			"discordbots.org": null}},
+
+	"success_or_failure_emojis": {false: "❌", true: "✅"}}
