@@ -2,6 +2,8 @@
 	"release": "development",
 	"description": "A bot that lets you easily create reaction polls using any emoji or yes/no/shrug",
 
+	"support_server_invite_code": "",
+
 	"database": {
 		"user": "reactor",
 		"password": "hunter2",
@@ -13,4 +15,6 @@
 
 		"stats": {
 			"bots.discord.pw": null,
-			"discordbots.org": null}}}
+			"discordbots.org": null}},
+
+	"success_or_failure_emojis": {false: "❌", true: "✅"}}

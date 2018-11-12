@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # encoding: utf-8
 
+import contextlib
 from datetime import datetime
 import time
 
@@ -13,7 +14,7 @@ class Meta:
 
 	def __init__(self, bot):
 		self.bot = bot
-		bot.remove_command('help')
+		self.bot.remove_command('help')
 
 	@command()
 	async def help(self, context):
@@ -59,6 +60,10 @@ class Meta:
 			value='Usage: `poll:invite`\n'
 				'Sends you an invite link '
 				'so you can add the bot to your own server')
+		embed.add_field(
+			name='support',
+			value='usage: `poll:support`\n'
+				'Directs you to the support server.')
 
 		await context.send(embed=embed)
 
@@ -70,7 +75,6 @@ class Meta:
 		permission_names = (
 			'read_messages',  # needed to act on commands
 			'send_messages',  # needed to send error messages
-			'manage_messages',  # needed to remove reactions on message edit
 			'external_emojis',  # in case the user supplies an external emoji in a poll
 			'add_reactions',  # needed to add poll options
 			'embed_links')  # needed to send the help message
@@ -80,6 +84,22 @@ class Meta:
 		await context.send(
 			'<%s>' % discord.utils.oauth_url(self.bot.client_id, permissions))
 
+	@command()
+	async def support(self, context):
+		"""Directs you to the support server."""
+		try:
+			await context.author.send('https://discord.gg/' + self.bot.config['support_server_invite_code'])
+		except discord.HTTPException:
+			with contextlib.suppress(discord.HTTPException):
+				await context.message.add_reaction(self.bot.config['success_or_failure_emojis'][False])
+			with contextlib.suppress(discord.HTTPException):
+				await context.send('Unable to send invite in DMs. Please allow DMs from server members.')
+		else:
+			with contextlib.suppress(discord.HTTPException):
+				await context.message.add_reaction('\N{open mailbox with raised flag}')
 
 def setup(bot):
 	bot.add_cog(Meta(bot))
+
+	if not bot.config.get('support_server_invite_code'):
+		bot.remove_command('support')

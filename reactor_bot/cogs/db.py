@@ -3,7 +3,6 @@
 
 import logging
 
-import aiocache
 import asyncpg
 import discord
 from discord.ext import commands
@@ -11,8 +10,6 @@ from discord.ext import commands
 from reactor_bot import emoji_utils
 
 logger = logging.getLogger('cogs.db')
-cached = aiocache.cached(ttl=20, serializer=None)
-
 
 class Database:
 	SETTINGS_UPDATED_MESSAGE = (
@@ -58,7 +55,6 @@ class Database:
 				shrug = EXCLUDED.shrug
 		""", channel, yes, no, shrug)
 
-	@cached
 	async def get_poll_emoji(self, channel: int):
 		return await self.pool.fetchrow("""
 			SELECT yes, no, shrug
@@ -90,7 +86,6 @@ class Database:
 		await self.pool.execute('DELETE FROM prefixless_channels WHERE channel = $1', channel)
 
 	# caching this function should prevent asyncpg "operation already in progress" errors
-	@cached
 	async def is_prefixless_channel(self, channel: int):
 		result = await self.pool.fetchval('SELECT 1 FROM prefixless_channels WHERE channel = $1', channel)
 		return bool(result)
