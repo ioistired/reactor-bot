@@ -13,7 +13,7 @@ def main():  # put it in a main function so that setuptools can create a launch 
 		'reactor_bot.cogs.db',
 		'reactor_bot.cogs.poll',
 		'reactor_bot.cogs.meta',
-		'ben_cogs.ie_jishaku',
+		'jishaku',
 		'ben_cogs.stats',
 		'ben_cogs.debug',
 		'ben_cogs.misc',
