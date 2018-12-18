@@ -70,8 +70,6 @@ class ReactorBot(commands.Bot):
 			return False
 		if not self.dev_mode and message.author.bot:
 			return False
-		if not message.content:
-			return False
 
 		return True
 
