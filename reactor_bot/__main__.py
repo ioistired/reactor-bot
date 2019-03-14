@@ -19,13 +19,7 @@ def main():  # put it in a main function so that setuptools can create a launch 
 		'ben_cogs.misc',
 	):
 		logging.info('Loading extension %s', extension)
-		try:
-			bot.load_extension(extension)
-		except Exception as e:
-			exc = '%s: %s' % (type(e).__name__, e)
-			logging.error('Failed to load extension %s', extension)
-			logging.error(exc)
-			continue
+		bot.load_extension(extension)
 
 	bot.run(bot.config['tokens']['discord'])
 
