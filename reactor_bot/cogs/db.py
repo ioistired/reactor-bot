@@ -11,7 +11,7 @@ from reactor_bot import emoji_utils
 
 logger = logging.getLogger('cogs.db')
 
-class Database:
+class Database(commands.Cog):
 	SETTINGS_UPDATED_MESSAGE = (
 		'\N{white heavy check mark} Done. '
 		'Note that it may take up to twenty seconds for your changes to take effect.')
@@ -20,7 +20,7 @@ class Database:
 		self.bot = bot
 		self._init_task = self.bot.loop.create_task(self._init())
 
-	def __unload(self):
+	def cog_unload(self):
 		self._init_task.cancel()
 
 		try:

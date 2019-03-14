@@ -6,17 +6,21 @@ from datetime import datetime
 import time
 
 import discord
-from discord.ext.commands import command
+from discord.ext import commands
 
-
-class Meta:
+class Meta(commands.Cog):
 	"""Commands about the bot itself."""
 
 	def __init__(self, bot):
 		self.bot = bot
-		self.bot.remove_command('help')
+		# if we have it as a straight attr then it'll be picked up as a command by add_cog
+		# so we have to store it indirectly
+		self.old_help = (self.bot.remove_command('help'),)
 
-	@command()
+	def cog_unload(self):
+		self.bot.add_command(self.old_help[0])
+
+	@commands.command()
 	async def help(self, context):
 		"""This message yer lookin' at right here, pardner."""
 		embed = discord.Embed(title='Help for Reactor')
@@ -67,7 +71,7 @@ class Meta:
 
 		await context.send(embed=embed)
 
-	@command()
+	@commands.command()
 	async def invite(self, context):
 		"""Sends you a link so you can add the bot to your own server.
 		Thanks! 😊
@@ -84,7 +88,7 @@ class Meta:
 		await context.send(
 			'<%s>' % discord.utils.oauth_url(self.bot.client_id, permissions))
 
-	@command()
+	@commands.command()
 	async def support(self, context):
 		"""Directs you to the support server."""
 		try:

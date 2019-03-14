@@ -9,7 +9,7 @@ import inflect
 
 from reactor_bot import emoji_utils as emoji
 
-class Poll:
+class Poll(commands.Cog):
 	"""These commands are probably what you added the bot for."""
 
 	p = inflect.engine()
@@ -25,6 +25,7 @@ class Poll:
 		self.bot = bot
 		self.db = self.bot.get_cog('Database')
 
+	@commands.Cog.listener()
 	async def on_message(self, message):
 		if not self.bot.should_reply(message):
 			return
