@@ -64,10 +64,11 @@ class Meta(commands.Cog):
 			value='Usage: `poll:invite`\n'
 				'Sends you an invite link '
 				'so you can add the bot to your own server')
-		embed.add_field(
-			name='support',
-			value='usage: `poll:support`\n'
-				'Directs you to the support server.')
+		if self.bot.get_command('support'):
+			embed.add_field(
+				name='support',
+				value='usage: `poll:support`\n'
+					'Directs you to the support server.')
 
 		await context.send(embed=embed)
 
