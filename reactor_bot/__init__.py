@@ -11,6 +11,7 @@ import json
 import logging
 import traceback
 
+import asyncpg
 import discord
 from discord.ext import commands
 
@@ -81,3 +82,24 @@ class ReactorBot(commands.Bot):
 		# overridden because the default process_commands ignores bots now
 		context = await self.get_context(message)
 		await self.invoke(context)
+
+	async def start(self, *args, **kwargs):
+		await self._init_db()
+		await super().start(*args, **kwargs)
+
+	async def _init_db(self):
+		credentials = self.config['database']
+		# god bless kwargs
+		pool = await asyncpg.create_pool(**credentials)
+
+		with open('data/schema.sql') as f:
+			schema = f.read()
+
+		await pool.execute(schema)
+		self.pool = pool
+		logger.info('Database connection initialized successfully')
+
+	async def close(self):
+		with contextlib.suppress(AttributeError):
+			await self.pool.close()
+		await super().close()

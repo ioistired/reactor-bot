@@ -3,7 +3,6 @@
 
 import logging
 
-import asyncpg
 import discord
 from discord.ext import commands
 
@@ -18,26 +17,6 @@ class Database(commands.Cog):
 
 	def __init__(self, bot):
 		self.bot = bot
-		self._init_task = self.bot.loop.create_task(self._init())
-
-	def cog_unload(self):
-		self._init_task.cancel()
-
-		try:
-			self.bot.loop.create_task(self.pool.close())
-		except AttributeError:
-			pass
-
-	async def _init(self):
-		credentials = self.bot.config['database']
-		# god bless kwargs
-		self.pool = await asyncpg.create_pool(**credentials)
-
-		with open('data/schema.sql') as f:
-			schema = f.read()
-		await self.pool.execute(schema)
-
-		logger.info('Database connection initialized successfully')
 
 	async def set_poll_emoji(self, channel: int, yes, no, shrug):
 		# ok so sometimes the shitty discord client doesn't send us actual emojis, but shortcodes
@@ -45,7 +24,7 @@ class Database(commands.Cog):
 		# so we have to convert them from shortcodes to unicode.
 		yes, no, shrug = map(emoji_utils.convert_shortcode, (yes, no, shrug))
 		# mfw no INSERT OR REPLACE in postgres
-		await self.pool.execute("""
+		await self.bot.pool.execute("""
 			INSERT INTO poll_emoji (channel, yes, no, shrug)
 			VALUES ($1, $2, $3, $4)
 			ON CONFLICT (channel)
@@ -56,7 +35,7 @@ class Database(commands.Cog):
 		""", channel, yes, no, shrug)
 
 	async def get_poll_emoji(self, channel: int):
-		return await self.pool.fetchrow("""
+		return await self.bot.pool.fetchrow("""
 			SELECT yes, no, shrug
 			FROM poll_emoji
 			WHERE channel = $1
@@ -80,14 +59,14 @@ class Database(commands.Cog):
 			INSERT INTO prefixless_channels
 			VALUES ($1)
 			ON CONFLICT DO NOTHING;"""
-		await self.pool.execute(statement, channel)
+		await self.bot.pool.execute(statement, channel)
 
 	async def unset_prefixless_channel(self, channel: int):
-		await self.pool.execute('DELETE FROM prefixless_channels WHERE channel = $1', channel)
+		await self.bot.pool.execute('DELETE FROM prefixless_channels WHERE channel = $1', channel)
 
 	# caching this function should prevent asyncpg "operation already in progress" errors
 	async def is_prefixless_channel(self, channel: int):
-		result = await self.pool.fetchval('SELECT 1 FROM prefixless_channels WHERE channel = $1', channel)
+		result = await self.bot.pool.fetchval('SELECT 1 FROM prefixless_channels WHERE channel = $1', channel)
 		return bool(result)
 
 	@commands.command()
