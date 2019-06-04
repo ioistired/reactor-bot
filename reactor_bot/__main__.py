@@ -17,6 +17,7 @@ def main():  # put it in a main function so that setuptools can create a launch 
 		'ben_cogs.stats',
 		'ben_cogs.debug',
 		'ben_cogs.misc',
+		'ben_cogs.sql',
 	):
 		logging.info('Loading extension %s', extension)
 		bot.load_extension(extension)

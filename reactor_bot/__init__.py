@@ -83,20 +83,14 @@ class ReactorBot(commands.Bot):
 		context = await self.get_context(message)
 		await self.invoke(context)
 
-	async def start(self, *args, **kwargs):
+	async def login(self, *args, **kwargs):
 		await self._init_db()
-		await super().start(*args, **kwargs)
+		await super().login(*args, **kwargs)
 
 	async def _init_db(self):
-		credentials = self.config['database']
+		credentials = self.config.pop('database')
 		# god bless kwargs
-		pool = await asyncpg.create_pool(**credentials)
-
-		with open('data/schema.sql') as f:
-			schema = f.read()
-
-		await pool.execute(schema)
-		self.pool = pool
+		self.pool = await asyncpg.create_pool(**credentials)
 		logger.info('Database connection initialized successfully')
 
 	async def close(self):
