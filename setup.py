@@ -3,9 +3,6 @@
 
 import setuptools
 
-with open('requirements.txt') as f:
-	dependency_links = list(filter(lambda line: not line.startswith('#'), f))
-
 setuptools.setup(
 	name='reactor_bot',
 	version='4.5.15',
@@ -23,12 +20,10 @@ setuptools.setup(
 
 	install_requires=[
 		'asyncpg',
-		'ben_cogs',
-		'discord.py>=1.0.0a1430',
+		'ben_cogs[sql]',
+		'discord.py',
 		'inflect',
 		'jishaku'],
-
-	dependency_links=dependency_links,
 
 	python_requires='>=3.6',
 
@@ -41,9 +36,6 @@ setuptools.setup(
 			'pytest',
 			'pytest-cov',
 			'freezegun']},
-
-	entry_points={
-		'console_scripts': 'reactor-bot = reactor_bot.__main__:main'},
 
 	classifiers=[
 		'Development Status :: 4 - Beta',

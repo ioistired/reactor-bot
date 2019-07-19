@@ -85,13 +85,27 @@ class ReactorBot(commands.Bot):
 
 	async def login(self, *args, **kwargs):
 		await self._init_db()
-		await super().login(*args, **kwargs)
+		self._load_extensions()
+		await super().login(self.config['tokens'].pop('discord'), **kwargs)
 
 	async def _init_db(self):
 		credentials = self.config.pop('database')
 		# god bless kwargs
 		self.pool = await asyncpg.create_pool(**credentials)
 		logger.info('Database connection initialized successfully')
+
+	def _load_extensions(self):
+		for extension in (
+			'reactor_bot.cogs.db',
+			'reactor_bot.cogs.poll',
+			'reactor_bot.cogs.meta',
+			'jishaku',
+			'ben_cogs.stats',
+			'ben_cogs.debug',
+			'ben_cogs.misc',
+			'ben_cogs.sql',
+		):
+			self.load_extension(extension)
 
 	async def close(self):
 		with contextlib.suppress(AttributeError):
