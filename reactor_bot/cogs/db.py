@@ -2,6 +2,7 @@
 # encoding: utf-8
 
 import logging
+import typing
 
 import discord
 from discord.ext import commands
@@ -11,10 +12,6 @@ from reactor_bot import emoji_utils
 logger = logging.getLogger('cogs.db')
 
 class Database(commands.Cog):
-	SETTINGS_UPDATED_MESSAGE = (
-		'\N{white heavy check mark} Done. '
-		'Note that it may take up to twenty seconds for your changes to take effect.')
-
 	def __init__(self, bot):
 		self.bot = bot
 
@@ -41,18 +38,19 @@ class Database(commands.Cog):
 			WHERE channel = $1
 		""", channel)
 
-	@commands.command(name='set-emoji')
+	@commands.command(name='set-emoji', aliases=['set-poll-emoji'])
 	@commands.has_permissions(manage_emojis=True)
-	async def set_poll_emoji_command(self, context, channel: discord.TextChannel, yes, no, shrug):
+	async def set_poll_emoji_command(self, context, channel: typing.Optional[discord.TextChannel], yes, no, shrug):
 		"""sets the poll emoji for channel to the emojis provided
 
 		- all three arguments must be emojis. if they are not, the poll command will silently fail.
 		- you must have the Manage Emojis permission to use this
 		"""
 		# custom emojis must be sent without surrounding < and > for reactions
+		channel = channel or context.channel
 		yes, no, shrug = (x.strip('<>') for x in (yes, no, shrug))
 		await self.set_poll_emoji(channel.id, yes, no, shrug)
-		await context.send(self.SETTINGS_UPDATED_MESSAGE)
+		await context.message.add_reaction(self.bot.config['success_or_failure_emojis'][True])
 
 	async def set_prefixless_channel(self, channel: int):
 		statement = """
@@ -64,23 +62,22 @@ class Database(commands.Cog):
 	async def unset_prefixless_channel(self, channel: int):
 		await self.bot.pool.execute('DELETE FROM prefixless_channels WHERE channel = $1', channel)
 
-	# caching this function should prevent asyncpg "operation already in progress" errors
 	async def is_prefixless_channel(self, channel: int):
 		result = await self.bot.pool.fetchval('SELECT 1 FROM prefixless_channels WHERE channel = $1', channel)
 		return bool(result)
 
 	@commands.command()
-	@commands.has_permissions(manage_roles=True)
-	async def prefixless(self, context, channel: discord.TextChannel, prefixless: bool):
+	@commands.has_permissions(manage_channels=True)
+	async def prefixless(self, context, channel: typing.Optional[discord.TextChannel], prefixless: bool):
 		"""Sets a channel up to be "prefix-less".
 
 		All messages sent in that channel will be treated as a poll.
-		You must have the "Manage Roles" permission to use this command.
+		You must have the "Manage Channels" permission to use this command.
 		"""
-
+		channel = channel or context.channel
 		func = self.set_prefixless_channel if prefixless else self.unset_prefixless_channel
 		await func(channel.id)
-		await context.send(self.SETTINGS_UPDATED_MESSAGE)
+		await context.message.add_reaction(self.bot.config['success_or_failure_emojis'][True])
 
 
 def setup(bot):

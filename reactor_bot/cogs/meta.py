@@ -51,12 +51,12 @@ class Meta(commands.Cog):
 				"Useful if you're not sure how to use the bot yet.")
 		embed.add_field(
 			name='Prefixless mode',
-			value='Usage: `poll:prefixless #channel yes/no`\n'
+			value='Usage: `poll:prefixless [#channel] yes/no`\n'
 				'If you have the "Manage Roles" permission, you can make it so that '
 				'every message in a certain channel will be treated as a poll.')
 		embed.add_field(
 			name='Custom emoji settings',
-			value='Usage: `poll:set-emoji #channel yes no shrug`\n'
+			value='Usage: `poll:set-emoji [#channel] yes no shrug`\n'
 				'If you have the "Manage Emojis" permission, you can change the three emojis '
 				'that will be added to every poll.')
 		embed.add_field(
