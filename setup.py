@@ -20,8 +20,8 @@ setuptools.setup(
 
 	install_requires=[
 		'asyncpg',
-		'ben_cogs[sql]',
-		'discord.py',
+		'bot_bin[sql]>=1.0.1,<2.0.0',
+		'discord.py>=1.2.3,<2.0.0',
 		'inflect',
 		'jishaku'],
 
