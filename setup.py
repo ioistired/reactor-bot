@@ -6,10 +6,10 @@ import setuptools
 setuptools.setup(
 	name='reactor_bot',
 	version='4.5.15',
-	url='https://github.com/bmintz/reactor-bot',
+	url='https://github.com/iomintz/reactor-bot',
 
-	author='Benjamin Mintz',
-	author_email='bmintz@protonmail.com',
+	author='Io Mintz',
+	author_email='io@mintz.cc',
 
 	description='The best dang Discord poll bot around™',
 	long_description=open('README.rst').read(),
@@ -32,7 +32,6 @@ setuptools.setup(
 			'bumpversion'],
 
 		'test': [
-			'tox',
 			'pytest',
 			'pytest-cov',
 			'freezegun']},
@@ -41,4 +40,6 @@ setuptools.setup(
 		'Development Status :: 4 - Beta',
 		'Programming Language :: Python',
 		'Programming Language :: Python :: 3.6',
+		'Programming Language :: Python :: 3.7',
+		'Programming Language :: Python :: 3.8',
 		'License :: OSI Approved :: MIT License'])

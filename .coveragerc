@@ -1,0 +1,4 @@
+[run]
+omit=
+	reactor_bot/__init__.py
+	reactor_bot/__main__.py

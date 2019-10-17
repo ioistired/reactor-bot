@@ -4,8 +4,9 @@
 from string import ascii_uppercase
 
 import discord
-from discord.ext import commands
 import inflect
+import itertools
+from discord.ext import commands
 
 from reactor_bot import emoji_utils as emoji
 
@@ -15,11 +16,11 @@ class Poll(commands.Cog):
 	p = inflect.engine()
 
 	NOSHRUG_KEYWORDS = set()
-	for no in ('no', '⛔', '🚫'):
-		for shrug in ('shrug', '🤷'):
-			NOSHRUG_KEYWORDS.add(no+shrug)
-			NOSHRUG_KEYWORDS.add(no+' '+shrug)
+	for no, shrug in itertools.product(('no', '⛔', '🚫'), ('shrug', '🤷')):
+		NOSHRUG_KEYWORDS.add(no+shrug)
+		NOSHRUG_KEYWORDS.add(no+' '+shrug)
 	NOSHRUG_KEYWORDS = frozenset(NOSHRUG_KEYWORDS)
+	del no, shrug
 
 	def __init__(self, bot):
 		self.bot = bot

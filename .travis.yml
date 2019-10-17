@@ -1,0 +1,11 @@
+dist: bionic
+language: python
+python:
+  - 3.6
+  - 3.7
+  - 3.8
+script:
+  - pip install .[test] coveralls
+  - pytest --cov reactor_bot tests/ --cov-branch
+after_script:
+  - coveralls
