@@ -1,6 +1,14 @@
 Reactor™
 ========
 
+.. image:: https://img.shields.io/travis/iomintz/reactor-bot/master.svg?label=tests
+	:target: https://travis-ci.org/iomintz/reactor-bot
+	:alt: Unit Test Status
+
+.. image:: https://coveralls.io/repos/github/iomintz/reactor-bot/badge.svg
+	:target: https://coveralls.io/github/iomintz/reactor-bot
+	:alt: Coverage Status
+
 .. image:: https://discordbots.org/api/widget/status/323505480766849026.svg?noavatar=true
 	:target: https://discordbots.org/bot/323505480766849026
 	:alt: Discord Bots List
