@@ -87,7 +87,7 @@ class Meta(commands.Cog):
 		permissions.update(**dict.fromkeys(permission_names, True))
 
 		await context.send(
-			'<%s>' % discord.utils.oauth_url(self.bot.client_id, permissions))
+			'<%s>' % discord.utils.oauth_url(self.bot.user.id, permissions))
 
 	@commands.command()
 	async def support(self, context):
