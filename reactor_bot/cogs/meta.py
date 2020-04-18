@@ -51,7 +51,7 @@ class Meta(commands.Cog):
 				"Useful if you're not sure how to use the bot yet.")
 		embed.add_field(
 			name='Prefixless mode',
-			value='Usage: `poll:prefixless [#channel] yes/no`\n'
+			value='Usage: `poll:prefixless [#channel] on/off`\n'
 				'If you have the "Manage Roles" permission, you can make it so that '
 				'every message in a certain channel will be treated as a poll.')
 		embed.add_field(
