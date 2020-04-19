@@ -43,8 +43,8 @@ class Database(commands.Cog):
 	async def set_poll_emoji_command(self, context, channel: typing.Optional[discord.TextChannel], yes, no, shrug):
 		"""sets the poll emoji for channel to the emojis provided
 
-		- all three arguments must be emojis. if they are not, the poll command will silently fail.
-		- you must have the Manage Emojis permission to use this
+		- All three arguments must be emojis. If an invalid emoji is provided, that reaction will be disabled.
+		- You must have the Manage Emojis permission to use this command.
 		"""
 		# custom emojis must be sent without surrounding < and > for reactions
 		channel = channel or context.channel
