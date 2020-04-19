@@ -46,9 +46,7 @@ class Database(commands.Cog):
 		- All three arguments must be emojis. If an invalid emoji is provided, that reaction will be disabled.
 		- You must have the Manage Emojis permission to use this command.
 		"""
-		# custom emojis must be sent without surrounding < and > for reactions
 		channel = channel or context.channel
-		yes, no, shrug = (x.strip('<>') for x in (yes, no, shrug))
 		await self.set_poll_emoji(channel.id, yes, no, shrug)
 		await context.message.add_reaction(self.bot.config['success_or_failure_emojis'][True])
 
