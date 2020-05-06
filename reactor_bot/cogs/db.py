@@ -39,14 +39,15 @@ class Database(commands.Cog):
 		""", channel)
 
 	@commands.command(name='set-emoji', aliases=['set-poll-emoji'])
-	@commands.has_permissions(manage_emojis=True)
 	async def set_poll_emoji_command(self, context, channel: typing.Optional[discord.TextChannel], yes, no, shrug):
-		"""sets the poll emoji for channel to the emojis provided
+		"""Sets the poll emoji for channel (or the current one) to the emojis provided.
 
 		- All three arguments must be emojis. If an invalid emoji is provided, that reaction will be disabled.
-		- You must have the Manage Emojis permission to use this command.
+		- You must have the Manage Channels permission on the provided channel to use this command.
 		"""
 		channel = channel or context.channel
+		if not channel.permissions_for(context.author).manage_channels:
+			raise commands.MissingPermissions(('manage_channels',))
 		await self.set_poll_emoji(channel.id, yes, no, shrug)
 		await context.message.add_reaction(self.bot.config['success_or_failure_emojis'][True])
 
@@ -65,14 +66,15 @@ class Database(commands.Cog):
 		return bool(result)
 
 	@commands.command()
-	@commands.has_permissions(manage_channels=True)
 	async def prefixless(self, context, channel: typing.Optional[discord.TextChannel], prefixless: bool):
 		"""Sets a channel up to be "prefix-less".
 
 		All messages sent in that channel will be treated as a poll.
-		You must have the "Manage Channels" permission to use this command.
+		You must have the "Manage Channels" permission on the provided channel to use this command.
 		"""
 		channel = channel or context.channel
+		if not channel.permissions_for(context.author).manage_channels:
+			raise commands.MissingPermissions(('manage_channels',))
 		func = self.set_prefixless_channel if prefixless else self.unset_prefixless_channel
 		await func(channel.id)
 		await context.message.add_reaction(self.bot.config['success_or_failure_emojis'][True])
