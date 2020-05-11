@@ -32,7 +32,8 @@ class Meta(commands.Cog):
 			name='Poll',
 			value='Usage: `poll: <your message here>`\n'
 				'👍, 👎, and 🤷 will be added as reactions to your message, '
-				'unless "noshrug" is found in the message.')
+				'unless "noshrug" is found in the message.',
+			inline=False)
 		embed.add_field(
 			name='Multi poll',
 			value='Usage: ```poll: [poll title]\n'
@@ -42,13 +43,15 @@ class Meta(commands.Cog):
 				'\nAll the emoji you specified will be added to the message,'
 				'as well as :shrug:. '
 				'However, if you add "noshrug" or "⛔shrug" or similar, '
-				'anywhere in the message, :shrug: will *not* be sent.')
+				'anywhere in the message, :shrug: will *not* be sent.',
+			inline=False)
 		embed.add_field(
 			name='Poll maker',
 			value='Usage: `poll:make`\n'
 				'The bot will ask you everything it needs to know '
 				'about the poll, and then send it for you.\n'
-				"Useful if you're not sure how to use the bot yet.")
+				"Useful if you're not sure how to use the bot yet.",
+			inline=False)
 		embed.add_field(
 			name='Prefixless mode',
 			value='Usage: `poll:prefixless [#channel] on/off`\n'
@@ -58,12 +61,14 @@ class Meta(commands.Cog):
 			name='Custom emoji settings',
 			value='Usage: `poll:set-emoji [#channel] yes no shrug`\n'
 				'If you have the "Manage Channels" permission, you can change the three emojis '
-				'that will be added to every poll.')
+				'that will be added to every poll.',
+			inline=False)
 		embed.add_field(
 			name='invite',
 			value='Usage: `poll:invite`\n'
 				'Sends you an invite link '
-				'so you can add the bot to your own server')
+				'so you can add the bot to your own server',
+			inline=False)
 		if self.bot.get_command('support'):
 			embed.add_field(
 				name='support',
