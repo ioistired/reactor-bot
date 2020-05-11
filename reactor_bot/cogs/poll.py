@@ -22,6 +22,12 @@ class Poll(commands.Cog):
 	NOSHRUG_KEYWORDS = frozenset(NOSHRUG_KEYWORDS)
 	del no, shrug
 
+	PREFIXLESS_DISABLE_EMOJIS = (
+		'\N{speech balloon}',
+		'\N{left speech bubble}',
+		'<:pensive_speech_balloon:555620427742052365>',
+	)
+
 	def __init__(self, bot):
 		self.bot = bot
 		self.db = self.bot.get_cog('Database')
@@ -33,11 +39,16 @@ class Poll(commands.Cog):
 
 		context = await self.bot.get_context(message)
 
-		# e.g. poll: go out for lunch?
-		# or poll:foo (assuming foo is not a command)
 		if (
+			# e.g. poll: go out for lunch?
+			# or poll:foo (assuming foo is not a command)
 			context.prefix and not context.command
-			or not context.prefix and await self.db.is_prefixless_channel(message.channel.id)
+			or (
+				# "speech" emojis disable the poll
+				not message.content.startswith(self.PREFIXLESS_DISABLE_EMOJIS)
+				and not context.prefix
+				and await self.db.is_prefixless_channel(message.channel.id)
+			)
 		):
 			await self.reaction_poll(message)
 

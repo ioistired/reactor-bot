@@ -56,7 +56,10 @@ class Meta(commands.Cog):
 			name='Prefixless mode',
 			value='Usage: `poll:prefixless [#channel] on/off`\n'
 				'If you have the "Manage Channels" permission, you can make it so that '
-				'every message in a certain channel will be treated as a poll.')
+				'every message in a certain channel will be treated as a poll.\n'
+				'However, messages starting with \N{speech balloon} '
+				'or \N{left speech bubble}\N{variation selector-16} will not be treated as a poll in these channels.',
+			inline=False)
 		embed.add_field(
 			name='Custom emoji settings',
 			value='Usage: `poll:set-emoji [#channel] yes no shrug`\n'
