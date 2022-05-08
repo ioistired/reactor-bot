@@ -64,7 +64,7 @@ Run this in :code:`psql`::
 And then copy data/config.example.json to data/config.json and fill out the appropriate values
 in the database section and all the other sections.
 
-Now just :code:`pip install . -r requirements.txt`, preferably inside a venv.
+Now just :code:`pip install -e .`, preferably inside a venv.
 And finally, to run the bot, you do :code:`python -m reactor_bot`.
 
 Compatibility
@@ -76,8 +76,3 @@ License
 -------
 
 MIT. See `COPYING </COPYING>`_.
-
-Authors
--------
-
-Reactor was written by `Benjamin Mintz <bmintz@protonmail.com>`_.
