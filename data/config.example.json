@@ -19,4 +19,4 @@
 			"bots.discord.pw": null,
 			"discordbots.org": null}},
 
-	"success_or_failure_emojis": {false: "❌", true: "✅"}}
+	"success_or_failure_emojis": {"False": "\u274c", "True": "\u2705"}}
