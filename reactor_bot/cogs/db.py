@@ -49,7 +49,7 @@ class Database(commands.Cog):
 		if not channel.permissions_for(context.author).manage_channels:
 			raise commands.MissingPermissions(('manage_channels',))
 		await self.set_poll_emoji(channel.id, yes, no, shrug)
-		await context.message.add_reaction(self.bot.config['success_or_failure_emojis'][True])
+		await context.message.add_reaction(self.bot.config['success_or_failure_emojis']["True"])
 
 	async def set_prefixless_channel(self, channel: int):
 		statement = """
@@ -77,7 +77,7 @@ class Database(commands.Cog):
 			raise commands.MissingPermissions(('manage_channels',))
 		func = self.set_prefixless_channel if prefixless else self.unset_prefixless_channel
 		await func(channel.id)
-		await context.message.add_reaction(self.bot.config['success_or_failure_emojis'][True])
+		await context.message.add_reaction(self.bot.config['success_or_failure_emojis']["True"])
 
 
 def setup(bot):
