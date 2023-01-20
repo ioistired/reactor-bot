@@ -65,6 +65,9 @@ And then copy data/config.example.json to data/config.json and fill out the appr
 in the database section and all the other sections.
 
 Now just :code:`pip install -e .`, preferably inside a venv.
+
+The next step is to load the table from the database using the :code:`psql reactor -f data/schema.sql` command.
+
 And finally, to run the bot, you do :code:`python -m reactor_bot`.
 
 Compatibility
