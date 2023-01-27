@@ -64,6 +64,8 @@ Run this in :code:`psql`::
 And then copy data/config.example.json to data/config.json and fill out the appropriate values
 in the database section and all the other sections.
 
+Next, install the database schema: :code:`psql reactor -f data/schema.sql`.
+
 Now just :code:`pip install -e .`, preferably inside a venv.
 And finally, to run the bot, you do :code:`python -m reactor_bot`.
 
